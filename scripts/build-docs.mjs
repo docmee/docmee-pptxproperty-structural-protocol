@@ -128,7 +128,7 @@ function inlineMarkdown(text, currentSource) {
   html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
   html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
-    if (/^(https?:|mailto:|#)/.test(href)) {
+    if (/^(https?:|mailto:)/.test(href)) {
       return `<a href="${escapeHtml(href)}">${label}</a>`;
     }
 
@@ -140,6 +140,12 @@ function inlineMarkdown(text, currentSource) {
 
 function resolveLinkHref(currentSource, href) {
   const [hrefPath, fragment] = href.split("#");
+  const currentSlug = linkTargetBySource.get(normalizeSource(currentSource));
+
+  if (hrefPath === "" && fragment && currentSlug) {
+    return `#${currentSlug}-${slugify(fragment, "section")}`;
+  }
+
   const currentDir = path.posix.dirname(normalizeSource(currentSource));
   const resolved = normalizeSource(
     path.posix.normalize(path.posix.join(currentDir, hrefPath)),
@@ -545,7 +551,7 @@ for (const document of documents) {
   copyFileSync(sourcePath, outputPath);
 }
 
-for (const extraSource of ["example/example.json", "example/audio_shadow.json"]) {
+for (const extraSource of ["LICENSE", "example/example.json", "example/audio_shadow.json"]) {
   const sourcePath = path.join(rootDir, extraSource);
   if (!existsSync(sourcePath)) continue;
 
