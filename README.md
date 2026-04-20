@@ -9,9 +9,6 @@
 ```text
 .
 ├── README.md
-├── example/
-│   ├── example.json
-│   └── audio_shadow.json
 └── protocol/
     ├── README.md
     ├── core.md
@@ -30,8 +27,6 @@
 | 路径 | 用途 |
 | --- | --- |
 | [README.md](README.md) | 项目用途、目录说明和阅读方式。 |
-| [example/example.json](example/example.json) | 基础 `pptxProperty` 参考文件。 |
-| [example/audio_shadow.json](example/audio_shadow.json) | 音频、媒体播放和阴影属性参考文件。 |
 | [protocol/README.md](protocol/README.md) | 协议文档入口和阅读顺序。 |
 | [protocol/core.md](protocol/core.md) | 顶层结构、索引关系、坐标约定和通用类型。 |
 | [protocol/slideMaster.md](protocol/slideMaster.md) | `slideMasters`、`slideLayouts`、主题和母版结构。 |
