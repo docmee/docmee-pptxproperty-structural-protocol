@@ -1,0 +1,2035 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>docmee-pptxProperty 结构协议</title>
+    <meta name="description" content="Docmee pptxProperty JSON 结构协议在线文档。">
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body>
+    <div class="site-frame">
+      <aside class="side-nav" aria-label="文档导航">
+        <a class="brand" href="#top" aria-label="回到顶部">
+          <span class="brand-mark">DP</span>
+          <span>
+            <strong>pptxProperty</strong>
+            <small>结构协议</small>
+          </span>
+        </a>
+        <nav>
+          <section class="nav-group">
+        <h2>入门</h2>
+        <a class="nav-link" href="#overview" data-nav-link="overview">
+              <span>项目概览</span>
+              <small>README.md</small>
+            </a><a class="nav-link" href="#protocol" data-nav-link="protocol">
+              <span>协议入口</span>
+              <small>protocol/README.md</small>
+            </a>
+      </section>
+<section class="nav-group">
+        <h2>基础结构</h2>
+        <a class="nav-link" href="#core" data-nav-link="core">
+              <span>核心协议</span>
+              <small>protocol/core.md</small>
+            </a><a class="nav-link" href="#slide-master" data-nav-link="slide-master">
+              <span>幻灯片母版协议</span>
+              <small>protocol/slideMaster.md</small>
+            </a><a class="nav-link" href="#page" data-nav-link="page">
+              <span>页面协议</span>
+              <small>protocol/page.md</small>
+            </a>
+      </section>
+<section class="nav-group">
+        <h2>对象</h2>
+        <a class="nav-link" href="#object" data-nav-link="object">
+              <span>对象协议</span>
+              <small>protocol/object/README.md</small>
+            </a><a class="nav-link" href="#common-property" data-nav-link="common-property">
+              <span>对象公共属性</span>
+              <small>protocol/object/common-property.md</small>
+            </a><a class="nav-link" href="#text" data-nav-link="text">
+              <span>文本对象</span>
+              <small>protocol/object/text.md</small>
+            </a><a class="nav-link" href="#image" data-nav-link="image">
+              <span>图片对象</span>
+              <small>protocol/object/image.md</small>
+            </a><a class="nav-link" href="#table" data-nav-link="table">
+              <span>表格对象</span>
+              <small>protocol/object/table.md</small>
+            </a><a class="nav-link" href="#container" data-nav-link="container">
+              <span>分组对象</span>
+              <small>protocol/object/container.md</small>
+            </a><a class="nav-link" href="#other-objects" data-nav-link="other-objects">
+              <span>其他对象</span>
+              <small>protocol/object/other-objects.md</small>
+            </a>
+      </section>
+        </nav>
+      </aside>
+
+      <main id="top" class="content">
+        <header class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Docmee protocol reference</p>
+            <h1>docmee-pptxProperty 结构协议</h1>
+            <p class="lead">面向第三方开发者的 PPTX 结构数据说明：从顶层字段、母版版式，到页面对象树、文本、图片、表格、分组和媒体扩展。</p>
+            <div class="hero-actions">
+              <a class="primary-action" href="#core">开始阅读</a>
+              <a class="secondary-action" href="#object">查看对象协议</a>
+            </div>
+          </div>
+
+          <div class="protocol-map" aria-label="pptxProperty 结构图">
+            <div class="map-node root">pptxProperty</div>
+            <div class="map-branches">
+              <a href="#core" class="map-node">width / height / font</a>
+              <a href="#page" class="map-node">pages[]</a>
+              <a href="#slide-master" class="map-node">slideMasters[]</a>
+              <a href="#object" class="map-node">children[] object tree</a>
+            </div>
+          </div>
+        </header>
+
+        <section class="utility-panel" aria-label="文档工具">
+          <div class="search-box">
+            <label for="doc-search">搜索字段、对象或章节</label>
+            <div class="search-control">
+              <input id="doc-search" type="search" autocomplete="off" placeholder="例如：slideMasterIdx、fillStyle、tableColumn">
+              <button id="clear-search" type="button" aria-label="清空搜索">清空</button>
+            </div>
+            <div id="search-results" class="search-results" role="status" aria-live="polite"></div>
+          </div>
+
+          <div class="stat-grid" aria-label="文档统计">
+            <div><strong>12</strong><span>篇文档</span></div>
+            <div><strong>97</strong><span>段代码</span></div>
+            <div><strong>453</strong><span>张表格</span></div>
+            <div><strong>973</strong><span>字段标记</span></div>
+          </div>
+        </section>
+
+        <section class="reading-route" aria-labelledby="route-title">
+          <div>
+            <p class="eyebrow">Recommended route</p>
+            <h2 id="route-title">建议阅读路径</h2>
+          </div>
+          <ol>
+            <li><a href="#core">核心协议</a><span>确认顶层结构、坐标、颜色与通用类型。</span></li>
+            <li><a href="#slide-master">母版协议</a><span>理解主题、版式、颜色映射和占位符继承。</span></li>
+            <li><a href="#page">页面协议</a><span>处理页面与母版/版式之间的索引关系。</span></li>
+            <li><a href="#object">对象协议</a><span>按对象类型解析文本、图片、表格、分组和媒体。</span></li>
+          </ol>
+        </section>
+
+        <div class="doc-stack">
+          <article class="doc-section" id="overview" data-section="overview">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">README.md</p>
+                    <h2>项目概览</h2>
+                    <p>项目用途、阅读方式和兼容性说明。</p>
+                  </div>
+                  <a class="source-link" href="source/README.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="overview-docmee-pptxproperty-结构协议"><a class="anchor" href="#overview-docmee-pptxproperty-结构协议" aria-label="定位到 docmee-pptxProperty 结构协议">#</a>docmee-pptxProperty 结构协议</h1>
+<p><code>docmee-pptxProperty-structural-protocol</code> 用于维护 Docmee <code>pptxProperty</code> JSON 结构协议，帮助第三方开发者理解、读取、生成和校验 PPTX 结构数据。</p>
+<p><code>pptxProperty</code> 描述一个演示文稿的页面尺寸、页面内容、幻灯片母版、版式、主题、背景和页面对象。它不是 PPTX 文件本身，而是 Docmee 系统在编辑、解析和生成 PPTX 时使用的结构化数据格式。</p>
+<h2 id="overview-仓库结构"><a class="anchor" href="#overview-仓库结构" aria-label="定位到 仓库结构">#</a>仓库结构</h2>
+<figure class="code-card"><figcaption>text</figcaption><pre><code>.
+├── README.md
+└── protocol/
+    ├── README.md
+    ├── core.md
+    ├── slideMaster.md
+    ├── page.md
+    └── object/
+        ├── README.md
+        ├── common-property.md
+        ├── text.md
+        ├── image.md
+        ├── table.md
+        ├── container.md
+        └── other-objects.md</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>路径</th><th>用途</th></tr></thead><tbody><tr><td><a href="#overview">README.md</a></td><td>项目用途、目录说明和阅读方式。</td></tr>
+<tr><td><a href="#protocol">protocol/README.md</a></td><td>协议文档入口和阅读顺序。</td></tr>
+<tr><td><a href="#core">protocol/core.md</a></td><td>顶层结构、索引关系、坐标约定和通用类型。</td></tr>
+<tr><td><a href="#slide-master">protocol/slideMaster.md</a></td><td><code>slideMasters</code>、<code>slideLayouts</code>、主题和母版结构。</td></tr>
+<tr><td><a href="#page">protocol/page.md</a></td><td><code>pages</code>、页面扩展信息和页面内容组织方式。</td></tr>
+<tr><td><a href="#object">protocol/object/README.md</a></td><td>页面对象协议入口。</td></tr>
+<tr><td><a href="#common-property">protocol/object/common-property.md</a></td><td>对象公共属性，例如位置、填充、阴影、超链接。</td></tr>
+<tr><td><a href="#text">protocol/object/text.md</a></td><td>文本对象、段落、文本片段和富文本组合。</td></tr>
+<tr><td><a href="#image">protocol/object/image.md</a></td><td>图片对象、图片资源、裁剪和透明度。</td></tr>
+<tr><td><a href="#table">protocol/object/table.md</a></td><td>表格、行、单元格、合并单元格。</td></tr>
+<tr><td><a href="#container">protocol/object/container.md</a></td><td>分组对象、位置、缩放和嵌套。</td></tr>
+<tr><td><a href="#other-objects">protocol/object/other-objects.md</a></td><td>音频、视频和媒体播放扩展。</td></tr></tbody></table></div>
+<h2 id="overview-使用方式"><a class="anchor" href="#overview-使用方式" aria-label="定位到 使用方式">#</a>使用方式</h2>
+<p>建议按以下顺序阅读协议：</p>
+<ol><li>阅读 <a href="#core">protocol/core.md</a>，理解顶层字段、坐标、颜色、填充、边框等通用结构。</li><li>阅读 <a href="#slide-master">protocol/slideMaster.md</a>，理解母版、版式、主题与占位符的组织方式。</li><li>阅读 <a href="#page">protocol/page.md</a>，理解页面如何引用母版和版式，以及页面内容如何挂载。</li><li>阅读 <a href="#object">protocol/object/README.md</a>，理解对象树和各对象类型的文档入口。</li><li>对照 <a href="source/example/example.json">example/example.json</a>，验证实际 JSON 与协议字段的对应关系。</li></ol>
+<p>开发集成时，推荐的处理流程是：</p>
+<ol><li>读取顶层 <code>width</code>、<code>height</code>，建立页面画布。</li><li>遍历 <code>pages</code>，读取每个页面的 <code>extInfo.slideMasterIdx</code> 和 <code>extInfo.slideLayoutIdx</code>。</li><li>根据索引解析对应的 <code>slideMasters[]</code> 和 <code>slideMasters[].slideLayouts[]</code>。</li><li>合成母版、版式、页面三层背景和占位符信息。</li><li>遍历 <code>pages[].children</code>，按 <code>object</code> 协议解析并渲染对象树。</li></ol>
+<h2 id="overview-兼容性说明"><a class="anchor" href="#overview-兼容性说明" aria-label="定位到 兼容性说明">#</a>兼容性说明</h2>
+<ul><li>协议字段名区分大小写，第三方实现应保持原始字段名。</li><li>未识别字段建议保留透传，避免破坏向前兼容。</li><li>读取对象时应优先判断 <code>type</code>，再解析对应的 <code>extInfo.property</code>。</li><li><code>slideMasterIdx</code> 和 <code>slideLayoutIdx</code> 是数组下标引用，处理过程中不应重新排序相关数组。</li><li>颜色、透明度、坐标等数值单位请以协议文档为准，不建议自行转换含义。</li></ul>
+<h2 id="overview-当前状态"><a class="anchor" href="#overview-当前状态" aria-label="定位到 当前状态">#</a>当前状态</h2>
+<p>本仓库目前提供结构协议文档和一份参考 JSON。后续可以继续补充 JSON Schema、最小对象样例和自动校验脚本。</p>
+                </div>
+              </article>
+<article class="doc-section" id="protocol" data-section="protocol">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">protocol/README.md</p>
+                    <h2>协议入口</h2>
+                    <p>pptxProperty 的整体结构和推荐阅读顺序。</p>
+                  </div>
+                  <a class="source-link" href="source/protocol/README.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="protocol-pptxproperty-协议"><a class="anchor" href="#protocol-pptxproperty-协议" aria-label="定位到 pptxProperty 协议">#</a>pptxProperty 协议</h1>
+<p>本目录存放 <code>pptxProperty</code> 的完整结构协议说明。协议面向需要读取、生成或转换 Docmee PPTX 结构数据的开发者。</p>
+<h2 id="protocol-阅读顺序"><a class="anchor" href="#protocol-阅读顺序" aria-label="定位到 阅读顺序">#</a>阅读顺序</h2>
+<div class="table-wrap"><table><thead><tr><th>文档</th><th>主题</th></tr></thead><tbody><tr><td><a href="#core">core.md</a></td><td>顶层数据结构、通用类型、坐标、颜色、填充、边框。</td></tr>
+<tr><td><a href="#slide-master">slideMaster.md</a></td><td>幻灯片母版、版式、主题、颜色映射、母版占位符。</td></tr>
+<tr><td><a href="#page">page.md</a></td><td>页面结构、页面扩展信息、页面与母版/版式的索引关系。</td></tr>
+<tr><td><a href="#object">object/README.md</a></td><td>页面对象树、文本、图片、表格、分组以及每类对象的属性。</td></tr></tbody></table></div>
+<h2 id="protocol-结构概览"><a class="anchor" href="#protocol-结构概览" aria-label="定位到 结构概览">#</a>结构概览</h2>
+<figure class="code-card"><figcaption>text</figcaption><pre><code>pptxProperty
+├── version
+├── width
+├── height
+├── font
+├── pages[]
+│   ├── extInfo
+│   │   ├── slideMasterIdx
+│   │   ├── slideLayoutIdx
+│   │   └── background
+│   └── children[]
+└── slideMasters[]
+    ├── theme
+    ├── clrMap
+    ├── background
+    ├── children[]
+    └── slideLayouts[]
+        ├── type
+        ├── name
+        ├── background
+        └── children[]</code></pre></figure>
+<p><code>pages</code> 保存实际页面。<code>slideMasters</code> 保存母版。每个 <code>slideMaster</code> 内部的 <code>slideLayouts</code> 保存版式。页面通过 <code>slideMasterIdx</code> 和 <code>slideLayoutIdx</code> 引用对应的母版和版式。</p>
+<h2 id="protocol-数据合成"><a class="anchor" href="#protocol-数据合成" aria-label="定位到 数据合成">#</a>数据合成</h2>
+<p>渲染或生成页面时，推荐按以下层级合成数据：</p>
+<ol><li>读取 <code>slideMasters[slideMasterIdx]</code>，获得主题、母版背景和母版占位符。</li><li>读取 <code>slideMasters[slideMasterIdx].slideLayouts[slideLayoutIdx]</code>，获得版式背景和版式占位符。</li><li>读取 <code>pages[].extInfo.background</code>，获得页面级背景。</li><li>读取 <code>pages[].children</code>，获得页面实际对象。</li></ol>
+<p>页面内容对象遵循统一的树结构，详见 <a href="#object">object/README.md</a>。</p>
+                </div>
+              </article>
+<article class="doc-section" id="core" data-section="core">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">protocol/core.md</p>
+                    <h2>核心协议</h2>
+                    <p>顶层结构、通用类型、坐标、颜色、填充和边框。</p>
+                  </div>
+                  <a class="source-link" href="source/protocol/core.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="core-核心协议"><a class="anchor" href="#core-核心协议" aria-label="定位到 核心协议">#</a>核心协议</h1>
+<p><code>core</code> 描述 <code>pptxProperty</code> 的顶层结构、全局约定和跨模块复用的通用类型。</p>
+<h2 id="core-顶层结构"><a class="anchor" href="#core-顶层结构" aria-label="定位到 顶层结构">#</a>顶层结构</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type PptxProperty = {
+  version: string
+  width: number
+  height: number
+  font: FontResource[]
+  pages: Page[]
+  slideMasters: SlideMaster[]
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>是否必填</th><th>说明</th></tr></thead><tbody><tr><td><code>version</code></td><td><code>string</code></td><td>是</td><td>协议版本。</td></tr>
+<tr><td><code>width</code></td><td><code>number</code></td><td>是</td><td>页面画布宽度。</td></tr>
+<tr><td><code>height</code></td><td><code>number</code></td><td>是</td><td>页面画布高度。</td></tr>
+<tr><td><code>font</code></td><td><code>FontResource[]</code></td><td>是</td><td>全局字体资源列表。没有字体资源时使用空数组。</td></tr>
+<tr><td><code>pages</code></td><td><code>Page[]</code></td><td>是</td><td>实际页面数组。</td></tr>
+<tr><td><code>slideMasters</code></td><td><code>SlideMaster[]</code></td><td>是</td><td>幻灯片母版数组。每个母版可以包含多个 <code>slideLayouts</code>。</td></tr></tbody></table></div>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type FontResource = Record&lt;string, unknown&gt;</code></pre></figure>
+<h2 id="core-索引关系"><a class="anchor" href="#core-索引关系" aria-label="定位到 索引关系">#</a>索引关系</h2>
+<p>页面通过下标引用母版和版式：</p>
+<figure class="code-card"><figcaption>text</figcaption><pre><code>pages[n].extInfo.slideMasterIdx
+  -&gt; slideMasters[slideMasterIdx]
+
+pages[n].extInfo.slideLayoutIdx
+  -&gt; slideMasters[slideMasterIdx].slideLayouts[slideLayoutIdx]</code></pre></figure>
+<p>实现方应保持 <code>slideMasters</code> 和 <code>slideLayouts</code> 的顺序稳定。若需要过滤、排序或重建数组，应同步更新所有页面上的 <code>slideMasterIdx</code> 与 <code>slideLayoutIdx</code>。</p>
+<h2 id="core-坐标约定"><a class="anchor" href="#core-坐标约定" aria-label="定位到 坐标约定">#</a>坐标约定</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Box = [x: number, y: number, width: number, height: number]</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>格式</th><th>说明</th></tr></thead><tbody><tr><td><code>point</code></td><td><code>Box</code></td><td>对象在页面坐标系中的外框。</td></tr>
+<tr><td><code>anchor</code></td><td><code>Box</code></td><td>属性内的几何锚点。顶层对象通常与 <code>point</code> 一致。</td></tr>
+<tr><td><code>interiorAnchor</code></td><td><code>Box</code></td><td>分组内部坐标系区域。</td></tr>
+<tr><td><code>textInsets</code></td><td><code>[top, right, bottom, left]</code></td><td>文本内边距。</td></tr></tbody></table></div>
+<p>页面坐标原点位于左上角，<code>x</code> 向右增加，<code>y</code> 向下增加。<code>width</code> 和 <code>height</code> 使用与顶层画布一致的单位。</p>
+<p>分组对象内部可以出现相对坐标或归一化坐标。渲染分组对象时，应先建立分组坐标系，再解析其子对象位置。</p>
+<h2 id="core-通用节点约定"><a class="anchor" href="#core-通用节点约定" aria-label="定位到 通用节点约定">#</a>通用节点约定</h2>
+<p>所有对象节点都使用 <code>children</code> 表达树形关系。没有子节点时，<code>children</code> 使用空数组。</p>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type ElementNode = {
+  id: string
+  pid?: string
+  type: string
+  depth: number
+  point?: Box
+  noDraw?: boolean
+  text?: string
+  extInfo: Record&lt;string, unknown&gt;
+  children: ElementNode[]
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>id</code></td><td><code>string</code></td><td>节点唯一标识。</td></tr>
+<tr><td><code>pid</code></td><td><code>string</code></td><td>父节点 id。顶层页面对象可以没有该字段。</td></tr>
+<tr><td><code>type</code></td><td><code>string</code></td><td>节点类型。</td></tr>
+<tr><td><code>depth</code></td><td><code>number</code></td><td>节点深度。页面直接子对象通常为 <code>1</code>。</td></tr>
+<tr><td><code>point</code></td><td><code>Box</code></td><td>对象外框。结构性节点可以没有该字段。</td></tr>
+<tr><td><code>noDraw</code></td><td><code>boolean</code></td><td>为 <code>true</code> 时表示该节点不直接绘制，常用于母版或版式占位符。</td></tr>
+<tr><td><code>text</code></td><td><code>string</code></td><td>文本内容。主要用于段落节点和文本片段节点。</td></tr>
+<tr><td><code>extInfo</code></td><td><code>object</code></td><td>扩展信息。对象样式和行为主要位于 <code>extInfo.property</code>。</td></tr>
+<tr><td><code>children</code></td><td><code>ElementNode[]</code></td><td>子节点数组。</td></tr></tbody></table></div>
+<h2 id="core-背景"><a class="anchor" href="#core-背景" aria-label="定位到 背景">#</a>背景</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Background = {
+  realType: &quot;Background&quot;
+  anchor: Box
+  fillStyle: FillStyle
+  strokeStyle: StrokeStyle
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>realType</code></td><td><code>&quot;Background&quot;</code></td><td>标识背景属性。</td></tr>
+<tr><td><code>anchor</code></td><td><code>Box</code></td><td>背景覆盖区域，通常覆盖完整画布。</td></tr>
+<tr><td><code>fillStyle</code></td><td><code>FillStyle</code></td><td>背景填充。</td></tr>
+<tr><td><code>strokeStyle</code></td><td><code>StrokeStyle</code></td><td>背景边框。没有边框时可为空对象。</td></tr></tbody></table></div>
+<h2 id="core-颜色"><a class="anchor" href="#core-颜色" aria-label="定位到 颜色">#</a>颜色</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type ColorValue = {
+  scheme?: string
+  realColor: number
+  color: number
+  lumMod?: number
+  lumOff?: number
+  shade?: number
+  tint?: number
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>scheme</code></td><td><code>string</code></td><td>主题色引用，例如 <code>accent1</code>、<code>tx1</code>、<code>bg1</code>。</td></tr>
+<tr><td><code>realColor</code></td><td><code>number</code></td><td>计算后的实际颜色值。</td></tr>
+<tr><td><code>color</code></td><td><code>number</code></td><td>原始颜色值或主题基础颜色值。</td></tr>
+<tr><td><code>lumMod</code></td><td><code>number</code></td><td>亮度乘数。</td></tr>
+<tr><td><code>lumOff</code></td><td><code>number</code></td><td>亮度偏移。</td></tr>
+<tr><td><code>shade</code></td><td><code>number</code></td><td>阴影或变暗比例。</td></tr>
+<tr><td><code>tint</code></td><td><code>number</code></td><td>着色或变亮比例。</td></tr></tbody></table></div>
+<p>颜色使用 32 位有符号整数表示。协议中的 <code>realColor</code> 和 <code>color</code> 存储的是 ARGB 整数，即高 8 位为透明通道，后 24 位依次为红、绿、蓝通道。常见不透明颜色可以理解为 <code>0xFFRRGGBB</code> 转成有符号十进制后的结果。</p>
+<p>换算步骤如下：</p>
+<ol><li>从输入颜色得到 <code>R</code>、<code>G</code>、<code>B</code>，每个通道范围为 <code>0..255</code>。</li><li>从输入透明度得到 <code>A</code>，范围也是 <code>0..255</code>。没有透明度时使用 <code>255</code>。</li><li>组合无符号整数：<code>argb = (A &lt;&lt; 24) | (R &lt;&lt; 16) | (G &lt;&lt; 8) | B</code>。</li><li>如果 <code>argb &gt;= 2147483648</code>，写入协议时使用 <code>argb - 4294967296</code>；否则直接写入 <code>argb</code>。</li></ol>
+<p>从十六进制颜色转换时：</p>
+<ul><li><code>#RRGGBB</code>：<code>A = 255</code>，再按 <code>0xFFRRGGBB</code> 组合。</li><li><code>#RGB</code>：先展开为 <code>#RRGGBB</code>，例如 <code>#0AF</code> 等同于 <code>#00AAFF</code>。</li><li><code>#RRGGBBAA</code>：若来源明确使用 CSS 八位十六进制格式，则最后两位是透明通道，需要转换成协议使用的 <code>AARRGGBB</code> 再写入十进制值。</li><li>不建议混用未标明来源的八位十六进制颜色，因为有些系统使用 <code>#AARRGGBB</code>，有些系统使用 <code>#RRGGBBAA</code>。</li></ul>
+<p>从 <code>rgba(r,g,b,a)</code> 转换时：</p>
+<ul><li><code>r</code>、<code>g</code>、<code>b</code> 直接作为 <code>R</code>、<code>G</code>、<code>B</code>。</li><li>CSS 中的 <code>a</code> 通常为 <code>0..1</code>，换算为 <code>A = round(a * 255)</code>。</li><li>协议中的独立 <code>alpha</code> 字段使用 <code>0..100000</code>，可写为 <code>round(a * 100000)</code>；<code>100000</code> 表示完全不透明，<code>0</code> 表示完全透明。</li></ul>
+<p>常见示例：</p>
+<div class="table-wrap"><table><thead><tr><th>输入</th><th>ARGB 十六进制</th><th>协议十进制</th></tr></thead><tbody><tr><td><code>#FFFFFF</code></td><td><code>0xFFFFFFFF</code></td><td><code>-1</code></td></tr>
+<tr><td><code>#000000</code></td><td><code>0xFF000000</code></td><td><code>-16777216</code></td></tr>
+<tr><td><code>#4874CB</code></td><td><code>0xFF4874CB</code></td><td><code>-12028725</code></td></tr>
+<tr><td><code>rgba(0,0,0,0.17)</code></td><td><code>0x2B000000</code></td><td><code>721420288</code></td></tr></tbody></table></div>
+<p>实现方可以按自身语言的颜色工具转换为 RGB 或 ARGB，但应保留原始数值以便回写。</p>
+<h2 id="core-填充样式"><a class="anchor" href="#core-填充样式" aria-label="定位到 填充样式">#</a>填充样式</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type FillStyle =
+  | { type: &quot;noFill&quot; }
+  | { type: &quot;color&quot;; color: ColorValue }
+  | { type: &quot;gradient&quot;; gradient: GradientFill }
+  | { type: &quot;texture&quot;; texture: TextureFill }</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th><code>type</code></th><th>说明</th></tr></thead><tbody><tr><td><code>noFill</code></td><td>无填充。</td></tr>
+<tr><td><code>color</code></td><td>纯色填充。</td></tr>
+<tr><td><code>gradient</code></td><td>渐变填充。</td></tr>
+<tr><td><code>texture</code></td><td>图片或纹理填充。</td></tr></tbody></table></div>
+<h3 id="core-渐变填充"><a class="anchor" href="#core-渐变填充" aria-label="定位到 渐变填充">#</a>渐变填充</h3>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type GradientFill = {
+  angle: number
+  colors: ColorValue[]
+  fractions: number[]
+  gradientType: string
+  insets: number[] | null
+  flip: string | null
+  tileRect: number[] | null
+  rotWithShape: boolean | null
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>angle</code></td><td><code>number</code></td><td>渐变角度。</td></tr>
+<tr><td><code>colors</code></td><td><code>ColorValue[]</code></td><td>渐变色标。</td></tr>
+<tr><td><code>fractions</code></td><td><code>number[]</code></td><td>色标位置，顺序与 <code>colors</code> 对应。</td></tr>
+<tr><td><code>gradientType</code></td><td><code>string</code></td><td>渐变类型，例如 <code>linear</code>。</td></tr>
+<tr><td><code>insets</code></td><td><code>number[] | null</code></td><td>渐变区域内缩。</td></tr>
+<tr><td><code>flip</code></td><td><code>string | null</code></td><td>翻转模式。</td></tr>
+<tr><td><code>tileRect</code></td><td><code>number[] | null</code></td><td>平铺区域。</td></tr>
+<tr><td><code>rotWithShape</code></td><td><code>boolean | null</code></td><td>是否随形状旋转。</td></tr></tbody></table></div>
+<h3 id="core-纹理填充"><a class="anchor" href="#core-纹理填充" aria-label="定位到 纹理填充">#</a>纹理填充</h3>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type TextureFill = {
+  imageData: string
+  contentType: string
+  alpha: number
+  flipMode: string
+  stretch?: number[]
+  insets?: number[]
+  offset?: [number, number]
+  scale?: [number, number]
+  alignment?: string
+  alphaModFix?: number
+  rotWithShape?: boolean
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>imageData</code></td><td><code>string</code></td><td>图片资源，可以是 URL 或 <code>data:image/...;base64,...</code>。</td></tr>
+<tr><td><code>contentType</code></td><td><code>string</code></td><td>MIME 类型，例如 <code>image/png</code>、<code>image/jpeg</code>。</td></tr>
+<tr><td><code>alpha</code></td><td><code>number</code></td><td>纹理透明度。<code>100000</code> 表示完全不透明。</td></tr>
+<tr><td><code>flipMode</code></td><td><code>string</code></td><td>翻转模式。</td></tr>
+<tr><td><code>stretch</code></td><td><code>number[]</code></td><td>拉伸或裁切参数。</td></tr>
+<tr><td><code>insets</code></td><td><code>number[]</code></td><td>图片裁切内缩参数。</td></tr>
+<tr><td><code>offset</code></td><td><code>[number, number]</code></td><td>纹理偏移。</td></tr>
+<tr><td><code>scale</code></td><td><code>[number, number]</code></td><td>纹理缩放。</td></tr>
+<tr><td><code>alignment</code></td><td><code>string</code></td><td>对齐方式。</td></tr>
+<tr><td><code>alphaModFix</code></td><td><code>number</code></td><td>透明度修正值。</td></tr>
+<tr><td><code>rotWithShape</code></td><td><code>boolean</code></td><td>是否随形状旋转。</td></tr></tbody></table></div>
+<h2 id="core-边框样式"><a class="anchor" href="#core-边框样式" aria-label="定位到 边框样式">#</a>边框样式</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type StrokeStyle = {
+  paint?: FillStyle
+  lineWidth?: number
+  lineCap?: string
+  lineJoin?: string
+  lineDash?: string
+  lineCompound?: string
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>paint</code></td><td><code>FillStyle</code></td><td>线条填充。</td></tr>
+<tr><td><code>lineWidth</code></td><td><code>number</code></td><td>线宽。</td></tr>
+<tr><td><code>lineCap</code></td><td><code>string</code></td><td>线端样式。</td></tr>
+<tr><td><code>lineJoin</code></td><td><code>string</code></td><td>连接样式。</td></tr>
+<tr><td><code>lineDash</code></td><td><code>string</code></td><td>虚线样式。</td></tr>
+<tr><td><code>lineCompound</code></td><td><code>string</code></td><td>复合线样式。</td></tr></tbody></table></div>
+<h2 id="core-几何"><a class="anchor" href="#core-几何" aria-label="定位到 几何">#</a>几何</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Geometry = {
+  name: string
+  data: unknown | null
+  avLst: unknown | null
+  textBounds: unknown | null
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>name</code></td><td><code>string</code></td><td>几何类型名称，例如 <code>rect</code>、<code>tableColumn</code>。</td></tr>
+<tr><td><code>data</code></td><td><code>unknown | null</code></td><td>自定义几何数据。</td></tr>
+<tr><td><code>avLst</code></td><td><code>unknown | null</code></td><td>可调参数列表。</td></tr>
+<tr><td><code>textBounds</code></td><td><code>unknown | null</code></td><td>文本边界信息。</td></tr></tbody></table></div>
+<h2 id="core-占位符"><a class="anchor" href="#core-占位符" aria-label="定位到 占位符">#</a>占位符</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Placeholder = {
+  type: string
+  idx?: number
+  size?: string
+  visible: boolean
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>type</code></td><td><code>string</code></td><td>占位符类型，例如 <code>TITLE</code>、<code>BODY</code>、<code>CENTERED_TITLE</code>、<code>SUBTITLE</code>、<code>CONTENT</code>、<code>PICTURE</code>、<code>DATETIME</code>、<code>FOOTER</code>、<code>SLIDE_NUMBER</code>。</td></tr>
+<tr><td><code>idx</code></td><td><code>number</code></td><td>占位符索引。</td></tr>
+<tr><td><code>size</code></td><td><code>string</code></td><td>占位符尺寸级别，例如 <code>half</code>、<code>quarter</code>。</td></tr>
+<tr><td><code>visible</code></td><td><code>boolean</code></td><td>占位符是否可见。</td></tr></tbody></table></div>
+<h2 id="core-兼容性要求"><a class="anchor" href="#core-兼容性要求" aria-label="定位到 兼容性要求">#</a>兼容性要求</h2>
+<ul><li>字段名必须按协议原样读取和写入。</li><li>未识别字段应保留透传。</li><li>数组顺序具有语义，尤其是 <code>pages</code>、<code>slideMasters</code>、<code>slideLayouts</code> 和对象 <code>children</code>。</li><li>对象渲染应优先基于 <code>type</code> 分派，再解析对应的 <code>extInfo.property</code>。</li><li><code>null</code> 与字段缺失应区别处理。<code>null</code> 通常表示该结构被显式保留但当前没有值。</li></ul>
+                </div>
+              </article>
+<article class="doc-section" id="slide-master" data-section="slide-master">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">protocol/slideMaster.md</p>
+                    <h2>幻灯片母版协议</h2>
+                    <p>母版、版式、主题、颜色映射和占位符。</p>
+                  </div>
+                  <a class="source-link" href="source/protocol/slideMaster.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="slide-master-幻灯片母版协议"><a class="anchor" href="#slide-master-幻灯片母版协议" aria-label="定位到 幻灯片母版协议">#</a>幻灯片母版协议</h1>
+<p><code>slideMaster</code> 描述幻灯片母版、版式、主题、颜色映射和母版占位对象。页面通过索引引用母版和版式。</p>
+<h2 id="slide-master-母版结构"><a class="anchor" href="#slide-master-母版结构" aria-label="定位到 母版结构">#</a>母版结构</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type SlideMaster = {
+  background: Background
+  clrMap: ColorMap
+  theme: Theme
+  children: ElementNode[]
+  slideLayouts: SlideLayout[]
+  animation: unknown | null
+  transition: unknown | null
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>是否必填</th><th>说明</th></tr></thead><tbody><tr><td><code>background</code></td><td><code>Background</code></td><td>是</td><td>母版默认背景。</td></tr>
+<tr><td><code>clrMap</code></td><td><code>ColorMap</code></td><td>是</td><td>主题颜色映射。</td></tr>
+<tr><td><code>theme</code></td><td><code>Theme</code></td><td>是</td><td>主题名称、主题颜色和字体映射。</td></tr>
+<tr><td><code>children</code></td><td><code>ElementNode[]</code></td><td>是</td><td>母版级占位对象。</td></tr>
+<tr><td><code>slideLayouts</code></td><td><code>SlideLayout[]</code></td><td>是</td><td>母版下的版式集合。</td></tr>
+<tr><td><code>animation</code></td><td><code>unknown | null</code></td><td>是</td><td>母版动画信息。没有动画时为 <code>null</code>。</td></tr>
+<tr><td><code>transition</code></td><td><code>unknown | null</code></td><td>是</td><td>母版切换信息。没有切换时为 <code>null</code>。</td></tr></tbody></table></div>
+<h2 id="slide-master-颜色映射"><a class="anchor" href="#slide-master-颜色映射" aria-label="定位到 颜色映射">#</a>颜色映射</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type ColorMap = Record&lt;string, string&gt;</code></pre></figure>
+<p><code>clrMap</code> 用于把文档语义色映射到主题色槽位。例如：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;tx1&quot;: &quot;dk1&quot;,
+  &quot;bg2&quot;: &quot;lt2&quot;,
+  &quot;bg1&quot;: &quot;lt1&quot;,
+  &quot;tx2&quot;: &quot;dk2&quot;
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>键</th><th>说明</th></tr></thead><tbody><tr><td><code>tx1</code></td><td>主文本色映射。</td></tr>
+<tr><td><code>tx2</code></td><td>次文本色映射。</td></tr>
+<tr><td><code>bg1</code></td><td>主背景色映射。</td></tr>
+<tr><td><code>bg2</code></td><td>次背景色映射。</td></tr></tbody></table></div>
+<h2 id="slide-master-主题"><a class="anchor" href="#slide-master-主题" aria-label="定位到 主题">#</a>主题</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Theme = {
+  name: string
+  colors: Record&lt;string, number&gt;
+  majorFontMap: FontMap
+  minorFontMap: FontMap
+}
+
+type FontMap = {
+  latin: string
+  ea: string
+  cs: string
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>name</code></td><td><code>string</code></td><td>主题名称。</td></tr>
+<tr><td><code>colors</code></td><td><code>Record&lt;string, number&gt;</code></td><td>主题色表。常见键包括 <code>accent1</code> 到 <code>accent6</code>、<code>lt1</code>、<code>lt2</code>、<code>dk1</code>、<code>dk2</code>、<code>tx1</code>、<code>tx2</code>、<code>bg1</code>、<code>bg2</code>、<code>hlink</code>、<code>folHlink</code>。</td></tr>
+<tr><td><code>majorFontMap</code></td><td><code>FontMap</code></td><td>主字体映射，通常用于标题。</td></tr>
+<tr><td><code>minorFontMap</code></td><td><code>FontMap</code></td><td>次字体映射，通常用于正文。</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>字体映射字段</th><th>说明</th></tr></thead><tbody><tr><td><code>latin</code></td><td>西文字体。</td></tr>
+<tr><td><code>ea</code></td><td>东亚字体。</td></tr>
+<tr><td><code>cs</code></td><td>复杂文字字体。</td></tr></tbody></table></div>
+<h2 id="slide-master-版式结构"><a class="anchor" href="#slide-master-版式结构" aria-label="定位到 版式结构">#</a>版式结构</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type SlideLayout = {
+  type: string
+  name: string
+  noMaster: boolean | null
+  clrMap: ColorMap | null
+  background: Background
+  children: ElementNode[]
+  animation: unknown | null
+  transition: unknown | null
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>是否必填</th><th>说明</th></tr></thead><tbody><tr><td><code>type</code></td><td><code>string</code></td><td>是</td><td>版式类型。</td></tr>
+<tr><td><code>name</code></td><td><code>string</code></td><td>是</td><td>版式名称。</td></tr>
+<tr><td><code>noMaster</code></td><td><code>boolean | null</code></td><td>是</td><td>是否不继承母版。为 <code>null</code> 时按默认继承规则处理。</td></tr>
+<tr><td><code>clrMap</code></td><td><code>ColorMap | null</code></td><td>是</td><td>版式级颜色映射。为 <code>null</code> 时使用母版颜色映射。</td></tr>
+<tr><td><code>background</code></td><td><code>Background</code></td><td>是</td><td>版式背景。</td></tr>
+<tr><td><code>children</code></td><td><code>ElementNode[]</code></td><td>是</td><td>版式占位对象。</td></tr>
+<tr><td><code>animation</code></td><td><code>unknown | null</code></td><td>是</td><td>版式动画信息。没有动画时为 <code>null</code>。</td></tr>
+<tr><td><code>transition</code></td><td><code>unknown | null</code></td><td>是</td><td>版式切换信息。没有切换时为 <code>null</code>。</td></tr></tbody></table></div>
+<h2 id="slide-master-版式类型"><a class="anchor" href="#slide-master-版式类型" aria-label="定位到 版式类型">#</a>版式类型</h2>
+<p>常见 <code>slideLayout.type</code> 包括：</p>
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>TITLE</code></td><td>标题页。</td></tr>
+<tr><td><code>TITLE_AND_CONTENT</code></td><td>标题和内容。</td></tr>
+<tr><td><code>SECTION_HEADER</code></td><td>章节标题页。</td></tr>
+<tr><td><code>TWO_OBJ</code></td><td>双内容区。</td></tr>
+<tr><td><code>TWO_TX_TWO_OBJ</code></td><td>对比版式。</td></tr>
+<tr><td><code>TITLE_ONLY</code></td><td>仅标题。</td></tr>
+<tr><td><code>BLANK</code></td><td>空白页。</td></tr>
+<tr><td><code>VERT_TITLE_AND_TX</code></td><td>竖排标题与文本。</td></tr>
+<tr><td><code>CUST</code></td><td>自定义版式。</td></tr></tbody></table></div>
+<h2 id="slide-master-母版和版式对象"><a class="anchor" href="#slide-master-母版和版式对象" aria-label="定位到 母版和版式对象">#</a>母版和版式对象</h2>
+<p><code>slideMasters[].children</code> 和 <code>slideMasters[].slideLayouts[].children</code> 使用与页面对象相同的 <code>ElementNode</code> 结构。它们通常用于表示占位符、页脚、日期、页码和默认文本样式。</p>
+<p>占位对象通常具有以下特征：</p>
+<ul><li><code>type</code> 多为 <code>text</code>。</li><li><code>noDraw</code> 可以为 <code>true</code>，表示该节点作为模板或占位定义存在。</li><li><code>extInfo.property.placeholder</code> 描述占位符语义。</li><li>文本样式可通过 <code>p</code> 和 <code>r</code> 子节点提供默认段落样式和字符样式。</li></ul>
+<h2 id="slide-master-占位符解析"><a class="anchor" href="#slide-master-占位符解析" aria-label="定位到 占位符解析">#</a>占位符解析</h2>
+<p>页面生成或渲染时，可以按以下顺序处理占位符：</p>
+<ol><li>读取母版 <code>children</code>，建立全局占位符集合。</li><li>读取版式 <code>children</code>，覆盖或补充母版占位符集合。</li><li>读取页面 <code>children</code>，用真实页面对象替换对应占位符。</li><li>对没有被页面对象替换的占位符，根据 <code>visible</code> 和 <code>noDraw</code> 决定是否渲染。</li></ol>
+<p>占位符匹配时可结合 <code>placeholder.type</code>、<code>placeholder.idx</code> 和对象层级判断。</p>
+                </div>
+              </article>
+<article class="doc-section" id="page" data-section="page">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">protocol/page.md</p>
+                    <h2>页面协议</h2>
+                    <p>页面结构、页面扩展信息和对象挂载方式。</p>
+                  </div>
+                  <a class="source-link" href="source/protocol/page.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="page-页面协议"><a class="anchor" href="#page-页面协议" aria-label="定位到 页面协议">#</a>页面协议</h1>
+<p><code>page</code> 描述实际幻灯片页面。页面负责引用母版与版式，并承载当前页的真实对象树。</p>
+<h2 id="page-页面结构"><a class="anchor" href="#page-页面结构" aria-label="定位到 页面结构">#</a>页面结构</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Page = {
+  page: number
+  extInfo: PageExtInfo
+  children: ElementNode[]
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>是否必填</th><th>说明</th></tr></thead><tbody><tr><td><code>page</code></td><td><code>number</code></td><td>是</td><td>页码。推荐使用从 <code>1</code> 开始的正整数。</td></tr>
+<tr><td><code>extInfo</code></td><td><code>PageExtInfo</code></td><td>是</td><td>页面扩展信息。</td></tr>
+<tr><td><code>children</code></td><td><code>ElementNode[]</code></td><td>是</td><td>当前页的真实对象数组。</td></tr></tbody></table></div>
+<h2 id="page-页面扩展信息"><a class="anchor" href="#page-页面扩展信息" aria-label="定位到 页面扩展信息">#</a>页面扩展信息</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type PageExtInfo = {
+  slideMasterIdx: number
+  slideLayoutIdx: number
+  background: Background
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>是否必填</th><th>说明</th></tr></thead><tbody><tr><td><code>slideMasterIdx</code></td><td><code>number</code></td><td>是</td><td>引用 <code>slideMasters</code> 的数组下标。</td></tr>
+<tr><td><code>slideLayoutIdx</code></td><td><code>number</code></td><td>是</td><td>引用当前母版下 <code>slideLayouts</code> 的数组下标。</td></tr>
+<tr><td><code>background</code></td><td><code>Background</code></td><td>是</td><td>页面级背景。</td></tr></tbody></table></div>
+<h2 id="page-页面解析"><a class="anchor" href="#page-页面解析" aria-label="定位到 页面解析">#</a>页面解析</h2>
+<p>处理页面时，应按以下顺序解析：</p>
+<ol><li>读取顶层 <code>width</code> 和 <code>height</code>，建立页面画布。</li><li>根据 <code>extInfo.slideMasterIdx</code> 读取对应 <code>slideMaster</code>。</li><li>根据 <code>extInfo.slideLayoutIdx</code> 读取该母版下的 <code>slideLayout</code>。</li><li>合成母版背景、版式背景和页面背景。</li><li>合成母版占位符、版式占位符和页面真实对象。</li><li>遍历 <code>children</code> 渲染页面对象树。</li></ol>
+<h2 id="page-背景优先级"><a class="anchor" href="#page-背景优先级" aria-label="定位到 背景优先级">#</a>背景优先级</h2>
+<p>背景可出现在三个层级：</p>
+<div class="table-wrap"><table><thead><tr><th>层级</th><th>字段</th><th>优先级</th></tr></thead><tbody><tr><td>母版</td><td><code>slideMasters[].background</code></td><td>最低</td></tr>
+<tr><td>版式</td><td><code>slideMasters[].slideLayouts[].background</code></td><td>中等</td></tr>
+<tr><td>页面</td><td><code>pages[].extInfo.background</code></td><td>最高</td></tr></tbody></table></div>
+<p>当多个层级都提供背景时，页面级背景优先。实现方也可以根据业务需要保留全部层级信息，用于编辑器展示或回写。</p>
+<h2 id="page-页面对象"><a class="anchor" href="#page-页面对象" aria-label="定位到 页面对象">#</a>页面对象</h2>
+<p><code>pages[].children</code> 是页面实际对象列表。每个对象都遵循 <a href="#object">object/README.md</a> 中的 <code>ElementNode</code> 结构。</p>
+<p>页面对象可以包含：</p>
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>text</code></td><td>文本框、占位文本、形状文本。</td></tr>
+<tr><td><code>image</code></td><td>图片对象。</td></tr>
+<tr><td><code>table</code></td><td>表格对象。</td></tr>
+<tr><td><code>container</code></td><td>分组对象。</td></tr></tbody></table></div>
+<p>对象的绘制顺序通常与 <code>children</code> 数组顺序相关。实现方若需要调整层级，应明确维护对象顺序或引入额外层级字段。</p>
+<h2 id="page-校验清单"><a class="anchor" href="#page-校验清单" aria-label="定位到 校验清单">#</a>校验清单</h2>
+<p>处理页面前建议验证：</p>
+<ul><li><code>slideMasterIdx</code> 指向存在的 <code>slideMasters</code> 元素。</li><li><code>slideLayoutIdx</code> 指向对应母版下存在的 <code>slideLayouts</code> 元素。</li><li><code>background.anchor</code> 与画布尺寸匹配或能被目标渲染器正确处理。</li><li><code>children</code> 是数组。</li><li><code>children</code> 中每个对象都有 <code>id</code>、<code>type</code>、<code>depth</code>、<code>extInfo</code> 和 <code>children</code>。</li></ul>
+                </div>
+              </article>
+<article class="doc-section" id="object" data-section="object">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">protocol/object/README.md</p>
+                    <h2>对象协议</h2>
+                    <p>页面对象树、对象类型和解析规则。</p>
+                  </div>
+                  <a class="source-link" href="source/protocol/object/README.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="object-对象协议"><a class="anchor" href="#object-对象协议" aria-label="定位到 对象协议">#</a>对象协议</h1>
+<p><code>object</code> 描述 <code>pptxProperty</code> 中的页面对象树。页面、母版、版式里的可视内容都使用同一套节点结构，并通过 <code>type</code> 区分对象类型。</p>
+<h2 id="object-文档入口"><a class="anchor" href="#object-文档入口" aria-label="定位到 文档入口">#</a>文档入口</h2>
+<div class="table-wrap"><table><thead><tr><th>文档</th><th>主题</th></tr></thead><tbody><tr><td><a href="#common-property">common-property.md</a></td><td>对象公共属性：位置、尺寸、旋转、填充、边框、阴影、占位符、超链接。</td></tr>
+<tr><td><a href="#text">text.md</a></td><td>文本对象、段落 <code>p</code>、文本片段 <code>r</code>、富文本组合方式。</td></tr>
+<tr><td><a href="#image">image.md</a></td><td>图片对象、图片资源、透明度、裁剪、图片填充。</td></tr>
+<tr><td><a href="#table">table.md</a></td><td>表格、行、单元格、合并单元格、边框和单元格文本。</td></tr>
+<tr><td><a href="#container">container.md</a></td><td>分组对象、坐标系、位置、缩放和子对象组合。</td></tr>
+<tr><td><a href="#other-objects">other-objects.md</a></td><td>音频、视频等媒体类对象和轻量对象说明。</td></tr></tbody></table></div>
+<h2 id="object-对象节点"><a class="anchor" href="#object-对象节点" aria-label="定位到 对象节点">#</a>对象节点</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type ElementNode = {
+  id: string
+  pid?: string
+  type: ElementType
+  depth: number
+  point?: Box
+  noDraw?: boolean
+  text?: string
+  extInfo: ElementExtInfo
+  children: ElementNode[]
+}
+
+type ElementType =
+  | &quot;text&quot;
+  | &quot;image&quot;
+  | &quot;table&quot;
+  | &quot;tableRow&quot;
+  | &quot;tableColumn&quot;
+  | &quot;p&quot;
+  | &quot;r&quot;
+  | &quot;container&quot;</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>id</code></td><td><code>string</code></td><td>对象唯一标识。应在同一文档内保持唯一。</td></tr>
+<tr><td><code>pid</code></td><td><code>string</code></td><td>父对象 id。页面顶层对象通常不设置。</td></tr>
+<tr><td><code>type</code></td><td><code>ElementType</code></td><td>对象类型。解析时先根据该字段分派到对应协议。</td></tr>
+<tr><td><code>depth</code></td><td><code>number</code></td><td>节点深度。页面直接子对象通常为 <code>1</code>，子节点逐级递增。</td></tr>
+<tr><td><code>point</code></td><td><code>Box</code></td><td>对象在父坐标系中的外框。文本段落、文本片段、表格行等结构节点可以没有该字段。</td></tr>
+<tr><td><code>noDraw</code></td><td><code>boolean</code></td><td>为 <code>true</code> 时表示该对象作为模板或占位定义存在，不应直接作为页面实物绘制。</td></tr>
+<tr><td><code>text</code></td><td><code>string</code></td><td>文本内容。主要用于 <code>p</code> 空段落和 <code>r</code> 文本片段。</td></tr>
+<tr><td><code>extInfo</code></td><td><code>ElementExtInfo</code></td><td>对象扩展信息。样式、资源和行为通常在 <code>extInfo.property</code>。</td></tr>
+<tr><td><code>children</code></td><td><code>ElementNode[]</code></td><td>子对象数组。叶子节点使用空数组。</td></tr></tbody></table></div>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type ElementExtInfo = {
+  property?: Record&lt;string, unknown&gt;
+  rowSpan?: number
+  gridSpan?: number
+  [key: string]: unknown
+}</code></pre></figure>
+<h2 id="object-树结构规则"><a class="anchor" href="#object-树结构规则" aria-label="定位到 树结构规则">#</a>树结构规则</h2>
+<figure class="code-card"><figcaption>text</figcaption><pre><code>pages[].children
+├── text -&gt; p[] -&gt; r[]
+├── image
+├── table -&gt; tableRow[] -&gt; tableColumn[] -&gt; p[] -&gt; r[]
+└── container -&gt; (text | image | table | container)[]
+
+slideMasters[].children
+└── text 占位符
+
+slideMasters[].slideLayouts[].children
+└── text 占位符</code></pre></figure>
+<h2 id="object-解析规则"><a class="anchor" href="#object-解析规则" aria-label="定位到 解析规则">#</a>解析规则</h2>
+<ol><li>读取 <code>type</code>，选择对应对象协议。</li><li>读取 <code>point</code>，建立对象外框。没有 <code>point</code> 的结构节点继承父对象布局上下文。</li><li>读取 <code>extInfo.property</code>，解析该对象的真实类型、几何、样式、资源和行为。</li><li>递归处理 <code>children</code>。</li><li>未识别字段应保留透传，避免破坏向前兼容。</li></ol>
+<h2 id="object-对象类别"><a class="anchor" href="#object-对象类别" aria-label="定位到 对象类别">#</a>对象类别</h2>
+<div class="table-wrap"><table><thead><tr><th>类别</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td>文本</td><td><code>text</code>, <code>p</code>, <code>r</code></td><td>文本框、段落、富文本片段。</td></tr>
+<tr><td>图片</td><td><code>image</code></td><td>图片，也可作为音频或视频的封面对象。</td></tr>
+<tr><td>表格</td><td><code>table</code>, <code>tableRow</code>, <code>tableColumn</code></td><td>表格、行、单元格。</td></tr>
+<tr><td>分组</td><td><code>container</code></td><td>分组和嵌套分组。</td></tr>
+<tr><td>媒体</td><td><code>image</code> 上的 <code>audio</code>、<code>video</code> 字段</td><td>媒体资源通常挂载在图片对象的 <code>property</code> 上。</td></tr></tbody></table></div>
+<h2 id="object-公共属性概览"><a class="anchor" href="#object-公共属性概览" aria-label="定位到 公共属性概览">#</a>公共属性概览</h2>
+<p>常见对象属性可分为：</p>
+<div class="table-wrap"><table><thead><tr><th>分组</th><th>属性</th></tr></thead><tbody><tr><td>几何</td><td><code>realType</code>, <code>anchor</code>, <code>shapeType</code>, <code>geometry</code>, <code>rotation</code></td></tr>
+<tr><td>布局</td><td><code>point</code>, <code>anchor</code>, <code>interiorAnchor</code>, <code>textInsets</code></td></tr>
+<tr><td>外观</td><td><code>fillStyle</code>, <code>strokeStyle</code>, <code>shadow</code>, <code>effectLst</code>, <code>imageAlpha</code>, <code>fillAlpha</code></td></tr>
+<tr><td>占位</td><td><code>placeholder</code>, <code>noDraw</code></td></tr>
+<tr><td>交互</td><td><code>hyperlink</code>、媒体动画字段</td></tr></tbody></table></div>
+<p>公共属性的详细说明见 <a href="#common-property">common-property.md</a>。</p>
+                </div>
+              </article>
+<article class="doc-section" id="common-property" data-section="common-property">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">protocol/object/common-property.md</p>
+                    <h2>对象公共属性</h2>
+                    <p>对象共享的几何、填充、边框、阴影和交互属性。</p>
+                  </div>
+                  <a class="source-link" href="source/protocol/object/common-property.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="common-property-对象公共属性"><a class="anchor" href="#common-property-对象公共属性" aria-label="定位到 对象公共属性">#</a>对象公共属性</h1>
+<p>本文档描述多个对象类型共享的 <code>extInfo.property</code> 字段。具体对象文档只说明对象专有字段；遇到公共字段时应以本文为准。</p>
+<h2 id="common-property-属性位置"><a class="anchor" href="#common-property-属性位置" aria-label="定位到 属性位置">#</a>属性位置</h2>
+<p>对象样式通常位于：</p>
+<figure class="code-card"><figcaption>text</figcaption><pre><code>ElementNode.extInfo.property</code></pre></figure>
+<p>例如：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;type&quot;: &quot;text&quot;,
+  &quot;point&quot;: [80, 60, 320, 120],
+  &quot;extInfo&quot;: {
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;TextBox&quot;,
+      &quot;anchor&quot;: [80, 60, 320, 120],
+      &quot;rotation&quot;: 15,
+      &quot;fillStyle&quot;: { &quot;type&quot;: &quot;color&quot;, &quot;color&quot;: { &quot;realColor&quot;: -1, &quot;color&quot;: -1 } }
+    }
+  },
+  &quot;children&quot;: []
+}</code></pre></figure>
+<h2 id="common-property-realtype"><a class="anchor" href="#common-property-realtype" aria-label="定位到 `realType`">#</a><code>realType</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type RealType =
+  | &quot;Auto&quot;
+  | &quot;TextBox&quot;
+  | &quot;Picture&quot;
+  | &quot;table&quot;
+  | &quot;TableCell&quot;
+  | &quot;Group&quot;
+  | &quot;Background&quot;</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>值</th><th>适用对象</th><th>说明</th></tr></thead><tbody><tr><td><code>Auto</code></td><td><code>text</code></td><td>自动形状文本或占位符文本。</td></tr>
+<tr><td><code>TextBox</code></td><td><code>text</code></td><td>显式文本框。</td></tr>
+<tr><td><code>Picture</code></td><td><code>image</code></td><td>图片对象。音频/视频封面也可以使用该类型。</td></tr>
+<tr><td><code>table</code></td><td><code>table</code></td><td>表格对象。</td></tr>
+<tr><td><code>TableCell</code></td><td><code>tableColumn</code></td><td>表格单元格。</td></tr>
+<tr><td><code>Group</code></td><td><code>container</code></td><td>分组对象。</td></tr>
+<tr><td><code>Background</code></td><td>背景</td><td>背景。</td></tr></tbody></table></div>
+<p><code>type</code> 决定节点协议，<code>realType</code> 决定该节点在 PPTX 语义中的真实形态。实现方不应只依赖 <code>realType</code> 判断对象类型，因为文本、形状、占位符都可能使用相近的真实类型。</p>
+<h2 id="common-property-anchor"><a class="anchor" href="#common-property-anchor" aria-label="定位到 `anchor`">#</a><code>anchor</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Box = [x: number, y: number, width: number, height: number]</code></pre></figure>
+<p><code>anchor</code> 描述对象的几何区域。它与节点级 <code>point</code> 都是 <code>[x, y, width, height]</code>，但用途不同：</p>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>作用</th></tr></thead><tbody><tr><td><code>point</code></td><td>对象在当前坐标系中的外框，主要用于布局和快速定位。</td></tr>
+<tr><td><code>property.anchor</code></td><td>对象真实几何锚点，生成 PPTX 或精确渲染时应使用该字段。</td></tr></tbody></table></div>
+<p>顶层对象的 <code>point</code> 和 <code>anchor</code> 通常一致。分组内部对象的 <code>anchor</code> 可以是相对坐标或归一化坐标，需要结合父分组的 <code>interiorAnchor</code> 转换。</p>
+<h3 id="common-property-设置位置和尺寸"><a class="anchor" href="#common-property-设置位置和尺寸" aria-label="定位到 设置位置和尺寸">#</a>设置位置和尺寸</h3>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;point&quot;: [100, 80, 240, 120],
+  &quot;extInfo&quot;: {
+    &quot;property&quot;: {
+      &quot;anchor&quot;: [100, 80, 240, 120]
+    }
+  }
+}</code></pre></figure>
+<ul><li><code>x</code>、<code>y</code> 决定对象左上角。</li><li><code>width</code>、<code>height</code> 决定对象尺寸。</li><li>宽高应大于 <code>0</code>。宽高为 <code>0</code> 时对象不可见或无法被正确选择。</li><li>负坐标可以表示对象部分位于页面外，但第三方渲染器应明确是否支持。</li></ul>
+<h2 id="common-property-rotation"><a class="anchor" href="#common-property-rotation" aria-label="定位到 `rotation`">#</a><code>rotation</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Rotation = number</code></pre></figure>
+<p><code>rotation</code> 表示对象绕自身中心旋转的角度，单位为度。正值通常表示顺时针旋转。</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;rotation&quot;: 45
+}</code></pre></figure>
+<p>设置效果：</p>
+<div class="table-wrap"><table><thead><tr><th>值</th><th>效果</th></tr></thead><tbody><tr><td><code>0</code> 或缺失</td><td>不旋转。</td></tr>
+<tr><td><code>45</code></td><td>顺时针旋转 45 度。</td></tr>
+<tr><td><code>90</code></td><td>旋转为竖向。</td></tr>
+<tr><td><code>-30</code></td><td>逆时针旋转 30 度。</td></tr></tbody></table></div>
+<p>建议将角度规范化到 <code>-360..360</code> 或 <code>0..360</code>，避免不同渲染器对大角度值处理不一致。</p>
+<h2 id="common-property-shapetype"><a class="anchor" href="#common-property-shapetype" aria-label="定位到 `shapeType`">#</a><code>shapeType</code></h2>
+<p><code>shapeType</code> 描述对象外框形状。当前常用值为 <code>rect</code>。当对象需要以圆角矩形、椭圆或其他形状裁剪时，可扩展为对应形状名称。</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;shapeType&quot;: &quot;rect&quot;
+}</code></pre></figure>
+<p><code>shapeType</code> 应与 <code>geometry.name</code> 保持一致。若两者冲突，建议以 <code>geometry.name</code> 作为精确几何，以 <code>shapeType</code> 作为快速分类。</p>
+<h2 id="common-property-geometry"><a class="anchor" href="#common-property-geometry" aria-label="定位到 `geometry`">#</a><code>geometry</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Geometry = {
+  name: string
+  data: unknown | null
+  avLst: unknown | null
+  textBounds: unknown | null
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>name</code></td><td>几何类型，例如 <code>rect</code>、<code>tableColumn</code>。</td></tr>
+<tr><td><code>data</code></td><td>自定义路径或几何数据。没有自定义几何时为 <code>null</code>。</td></tr>
+<tr><td><code>avLst</code></td><td>形状调节点列表。没有调节点时为 <code>null</code>。</td></tr>
+<tr><td><code>textBounds</code></td><td>文本边界信息。没有额外文本边界时为 <code>null</code>。</td></tr></tbody></table></div>
+<p><code>geometry</code> 决定对象实际轮廓。对于图片对象，几何会影响图片裁剪范围；对于文本对象，几何会影响背景填充、边框和文本排版区域。</p>
+<h2 id="common-property-placeholder"><a class="anchor" href="#common-property-placeholder" aria-label="定位到 `placeholder`">#</a><code>placeholder</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Placeholder = {
+  type: string
+  idx?: number
+  size?: string
+  visible: boolean
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>type</code></td><td>占位符语义，例如 <code>TITLE</code>、<code>BODY</code>、<code>CENTERED_TITLE</code>、<code>SUBTITLE</code>、<code>CONTENT</code>、<code>PICTURE</code>、<code>DATETIME</code>、<code>FOOTER</code>、<code>SLIDE_NUMBER</code>。</td></tr>
+<tr><td><code>idx</code></td><td>占位符索引。同一版式内多个相同类型占位符用它区分。</td></tr>
+<tr><td><code>size</code></td><td>占位符尺寸级别，例如 <code>half</code>、<code>quarter</code>。</td></tr>
+<tr><td><code>visible</code></td><td>占位符是否可见。</td></tr></tbody></table></div>
+<p>设置方式：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;placeholder&quot;: {
+    &quot;type&quot;: &quot;TITLE&quot;,
+    &quot;visible&quot;: false
+  }
+}</code></pre></figure>
+<p>使用限制：</p>
+<ul><li><code>placeholder</code> 主要用于母版、版式和页面中的占位文本或占位内容对象。</li><li><code>idx</code> 应在同一版式范围内稳定，便于页面对象与占位符匹配。</li><li><code>visible: false</code> 表示占位符默认不作为实物内容展示；编辑器仍可使用它提供插入位置和默认样式。</li></ul>
+<h2 id="common-property-fillstyle"><a class="anchor" href="#common-property-fillstyle" aria-label="定位到 `fillStyle`">#</a><code>fillStyle</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type FillStyle =
+  | { type: &quot;noFill&quot; }
+  | { type: &quot;color&quot;; color: ColorValue }
+  | { type: &quot;gradient&quot;; gradient: GradientFill }
+  | { type: &quot;texture&quot;; texture: TextureFill }</code></pre></figure>
+<p><code>fillStyle</code> 控制对象内部填充。文本框、形状、表格单元格、背景和图片都可以使用填充。图片对象通常使用 <code>texture</code> 填充。</p>
+<h3 id="common-property-无填充"><a class="anchor" href="#common-property-无填充" aria-label="定位到 无填充">#</a>无填充</h3>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;fillStyle&quot;: { &quot;type&quot;: &quot;noFill&quot; }
+}</code></pre></figure>
+<p>效果：对象内部透明，只显示文本、边框或子内容。适用于无背景文本框。</p>
+<p>限制：</p>
+<ul><li><code>noFill</code> 不应同时带 <code>color</code>、<code>gradient</code> 或 <code>texture</code>。</li><li>若对象没有边框也没有文本，<code>noFill</code> 会让对象不可见，但对象仍可能可被选中。</li></ul>
+<h3 id="common-property-纯色填充"><a class="anchor" href="#common-property-纯色填充" aria-label="定位到 纯色填充">#</a>纯色填充</h3>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;fillStyle&quot;: {
+    &quot;type&quot;: &quot;color&quot;,
+    &quot;color&quot;: {
+      &quot;scheme&quot;: &quot;accent1&quot;,
+      &quot;realColor&quot;: -12028725,
+      &quot;color&quot;: -12028725
+    }
+  }
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>scheme</code></td><td>可选。引用主题色槽位。</td></tr>
+<tr><td><code>realColor</code></td><td>实际渲染颜色。</td></tr>
+<tr><td><code>color</code></td><td>原始颜色或主题基础颜色。</td></tr>
+<tr><td><code>alpha</code></td><td>可选。透明度，范围建议 <code>0..100000</code>，值越大越不透明。</td></tr>
+<tr><td><code>lumMod</code></td><td>可选。亮度乘数。</td></tr>
+<tr><td><code>lumOff</code></td><td>可选。亮度偏移。</td></tr>
+<tr><td><code>shade</code></td><td>可选。变暗比例。</td></tr>
+<tr><td><code>tint</code></td><td>可选。变亮比例。</td></tr></tbody></table></div>
+<p>设置效果：</p>
+<ul><li>只设置 <code>realColor</code> / <code>color</code>：使用纯色。</li><li>设置 <code>scheme</code>：颜色可随主题变化。</li><li>设置 <code>alpha</code>：颜色半透明，能看到底层内容。</li><li>设置 <code>lumMod</code> / <code>lumOff</code>：在主题色基础上变亮或变暗。</li></ul>
+<p><code>realColor</code> 和 <code>color</code> 都使用核心协议中的 32 位有符号 ARGB 十进制颜色。常用转换示例：</p>
+<ul><li><code>#FFFFFF</code> 写为 <code>-1</code>。</li><li><code>#000000</code> 写为 <code>-16777216</code>。</li><li><code>#4874CB</code> 写为 <code>-12028725</code>。</li><li><code>rgba(0,0,0,0.17)</code> 可写为 <code>realColor: 721420288</code>，并同时写入 <code>alpha: 17000</code> 保留透明度语义。</li></ul>
+<p>具体换算公式、十六进制和 <code>rgba()</code> 的处理规则见 <a href="#core">../core.md</a> 的“颜色”章节。</p>
+<h3 id="common-property-渐变填充"><a class="anchor" href="#common-property-渐变填充" aria-label="定位到 渐变填充">#</a>渐变填充</h3>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;fillStyle&quot;: {
+    &quot;type&quot;: &quot;gradient&quot;,
+    &quot;gradient&quot;: {
+      &quot;angle&quot;: 90,
+      &quot;colors&quot;: [
+        { &quot;realColor&quot;: -1, &quot;color&quot;: -1 },
+        { &quot;realColor&quot;: -12028725, &quot;color&quot;: -12028725 }
+      ],
+      &quot;fractions&quot;: [0, 1],
+      &quot;gradientType&quot;: &quot;linear&quot;,
+      &quot;insets&quot;: null,
+      &quot;flip&quot;: null,
+      &quot;tileRect&quot;: null,
+      &quot;rotWithShape&quot;: null
+    }
+  }
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>angle</code></td><td>渐变角度。常用于线性渐变方向。</td></tr>
+<tr><td><code>colors</code></td><td>渐变色标数组。</td></tr>
+<tr><td><code>fractions</code></td><td>色标位置数组，长度应与 <code>colors</code> 一致。通常使用 <code>0..1</code>。</td></tr>
+<tr><td><code>gradientType</code></td><td>渐变类型，例如 <code>linear</code>。</td></tr>
+<tr><td><code>insets</code></td><td>渐变区域内缩。没有内缩时为 <code>null</code>。</td></tr>
+<tr><td><code>flip</code></td><td>翻转模式。没有翻转时为 <code>null</code>。</td></tr>
+<tr><td><code>tileRect</code></td><td>平铺区域。没有平铺时为 <code>null</code>。</td></tr>
+<tr><td><code>rotWithShape</code></td><td>是否随形状旋转。</td></tr></tbody></table></div>
+<p>限制：</p>
+<ul><li><code>colors.length</code> 与 <code>fractions.length</code> 应一致。</li><li><code>fractions</code> 应按从小到大排列。</li><li>只有当目标渲染器支持渐变时才应使用复杂渐变；否则建议降级为首个色标或平均色。</li></ul>
+<h3 id="common-property-纹理填充"><a class="anchor" href="#common-property-纹理填充" aria-label="定位到 纹理填充">#</a>纹理填充</h3>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type TextureFill = {
+  imageData: string
+  contentType: string
+  alpha: number
+  flipMode: string
+  stretch?: [left: number, top: number, right: number, bottom: number]
+  insets?: [left: number, top: number, right: number, bottom: number]
+  offset?: [x: number, y: number]
+  scale?: [x: number, y: number]
+  alignment?: string
+  alphaModFix?: number
+  rotWithShape?: boolean
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>imageData</code></td><td>图片资源。可以是 URL，也可以是 <code>data:image/...;base64,...</code>。</td></tr>
+<tr><td><code>contentType</code></td><td>MIME 类型，例如 <code>image/png</code>、<code>image/jpeg</code>。</td></tr>
+<tr><td><code>alpha</code></td><td>图片透明度，<code>100000</code> 表示完全不透明。</td></tr>
+<tr><td><code>flipMode</code></td><td>翻转模式。常用 <code>NONE</code>。</td></tr>
+<tr><td><code>stretch</code></td><td>拉伸填充参数。通常 <code>[0,0,0,0]</code> 表示完整图片拉伸到对象区域。</td></tr>
+<tr><td><code>insets</code></td><td>裁剪内缩参数。常用于图片裁剪。</td></tr>
+<tr><td><code>offset</code></td><td>平铺或缩放时的偏移。</td></tr>
+<tr><td><code>scale</code></td><td>平铺或缩放时的比例。</td></tr>
+<tr><td><code>alignment</code></td><td>对齐方式，例如 <code>CENTER</code>。</td></tr>
+<tr><td><code>alphaModFix</code></td><td>透明度修正值。</td></tr>
+<tr><td><code>rotWithShape</code></td><td>是否随对象旋转。</td></tr></tbody></table></div>
+<h4 id="common-property-拉伸图片填充"><a class="anchor" href="#common-property-拉伸图片填充" aria-label="定位到 拉伸图片填充">#</a>拉伸图片填充</h4>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;type&quot;: &quot;texture&quot;,
+  &quot;texture&quot;: {
+    &quot;imageData&quot;: &quot;data:image/png;base64,...&quot;,
+    &quot;contentType&quot;: &quot;image/png&quot;,
+    &quot;alpha&quot;: 100000,
+    &quot;flipMode&quot;: &quot;NONE&quot;,
+    &quot;stretch&quot;: [0, 0, 0, 0]
+  }
+}</code></pre></figure>
+<p>效果：图片被拉伸填满对象区域。对象宽高比与图片宽高比不一致时，图片会被压缩或拉伸变形。</p>
+<h4 id="common-property-裁剪图片填充"><a class="anchor" href="#common-property-裁剪图片填充" aria-label="定位到 裁剪图片填充">#</a>裁剪图片填充</h4>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;type&quot;: &quot;texture&quot;,
+  &quot;texture&quot;: {
+    &quot;imageData&quot;: &quot;data:image/png;base64,...&quot;,
+    &quot;contentType&quot;: &quot;image/png&quot;,
+    &quot;alpha&quot;: 100000,
+    &quot;flipMode&quot;: &quot;NONE&quot;,
+    &quot;insets&quot;: [71667, 0, 0, 48134]
+  }
+}</code></pre></figure>
+<p>效果：先按 <code>insets</code> 裁剪图片，再填充到对象区域。裁剪值通常使用 PPTX 百分比单位，正值表示从对应边向内裁剪。</p>
+<h4 id="common-property-平铺或缩放图片填充"><a class="anchor" href="#common-property-平铺或缩放图片填充" aria-label="定位到 平铺或缩放图片填充">#</a>平铺或缩放图片填充</h4>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;type&quot;: &quot;texture&quot;,
+  &quot;texture&quot;: {
+    &quot;imageData&quot;: &quot;https://example.com/image.jpg&quot;,
+    &quot;contentType&quot;: &quot;image/jpeg&quot;,
+    &quot;alpha&quot;: 100000,
+    &quot;flipMode&quot;: &quot;NONE&quot;,
+    &quot;offset&quot;: [0, 0],
+    &quot;scale&quot;: [0.1, 0.1],
+    &quot;alignment&quot;: &quot;CENTER&quot;,
+    &quot;rotWithShape&quot;: true
+  }
+}</code></pre></figure>
+<p>效果：图片按 <code>scale</code> 缩放后填充对象，可结合 <code>offset</code> 和 <code>alignment</code> 控制位置。适用于纹理、图案或保持图片原始比例的场景。</p>
+<p>限制：</p>
+<ul><li><code>stretch</code> 和 <code>scale</code> / <code>offset</code> 不建议同时使用。若同时出现，应明确一个优先级。</li><li><code>imageData</code> 为远程 URL 时，渲染端需要具备下载和缓存能力。</li><li><code>alpha</code>、<code>alphaModFix</code> 都会影响透明度，合成时应避免重复应用。</li></ul>
+<h2 id="common-property-strokestyle"><a class="anchor" href="#common-property-strokestyle" aria-label="定位到 `strokeStyle`">#</a><code>strokeStyle</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type StrokeStyle = {
+  paint?: FillStyle
+  lineWidth?: number
+  lineCap?: string
+  lineJoin?: string
+  lineDash?: string
+  lineCompound?: string
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>paint</code></td><td>线条填充。使用 <code>{ &quot;type&quot;: &quot;noFill&quot; }</code> 表示无边框。</td></tr>
+<tr><td><code>lineWidth</code></td><td>线宽。值越大边框越粗。</td></tr>
+<tr><td><code>lineCap</code></td><td>线端样式，例如 <code>FLAT</code>。</td></tr>
+<tr><td><code>lineJoin</code></td><td>转角连接样式，例如 <code>ROUND</code>。</td></tr>
+<tr><td><code>lineDash</code></td><td>虚线样式，例如 <code>SOLID</code>。</td></tr>
+<tr><td><code>lineCompound</code></td><td>复合线样式，例如 <code>SINGLE</code>、<code>DOUBLE</code>。</td></tr></tbody></table></div>
+<p>示例：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;strokeStyle&quot;: {
+    &quot;paint&quot;: {
+      &quot;type&quot;: &quot;color&quot;,
+      &quot;color&quot;: { &quot;realColor&quot;: -16777216, &quot;color&quot;: -16777216 }
+    },
+    &quot;lineWidth&quot;: 2,
+    &quot;lineDash&quot;: &quot;SOLID&quot;,
+    &quot;lineCompound&quot;: &quot;SINGLE&quot;
+  }
+}</code></pre></figure>
+<h2 id="common-property-shadow"><a class="anchor" href="#common-property-shadow" aria-label="定位到 `shadow`">#</a><code>shadow</code></h2>
+<p><code>shadow</code> 表示对象阴影。文本框、图片、形状、表格单元格等可视对象都可以支持阴影。</p>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Shadow = {
+  algn?: string
+  blur?: number
+  angle?: number
+  distance?: number
+  rotWithShape?: boolean
+  scaleX?: number
+  scaleY?: number
+  fillStyle: FillStyle
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>algn</code></td><td>阴影相对对象的对齐位置。例如 <code>t</code> 表示顶部方向的对齐基准。</td></tr>
+<tr><td><code>blur</code></td><td>模糊半径。值越大，阴影边缘越柔和。</td></tr>
+<tr><td><code>angle</code></td><td>阴影方向角度。</td></tr>
+<tr><td><code>distance</code></td><td>阴影相对对象的偏移距离。</td></tr>
+<tr><td><code>rotWithShape</code></td><td>对象旋转时阴影是否一起旋转。</td></tr>
+<tr><td><code>scaleX</code></td><td>阴影横向缩放比例。大于 <code>1</code> 时阴影比对象更宽。</td></tr>
+<tr><td><code>scaleY</code></td><td>阴影纵向缩放比例。大于 <code>1</code> 时阴影比对象更高。</td></tr>
+<tr><td><code>fillStyle</code></td><td>阴影颜色和透明度。通常使用半透明颜色填充。</td></tr></tbody></table></div>
+<p>示例：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;shadow&quot;: {
+    &quot;algn&quot;: &quot;t&quot;,
+    &quot;blur&quot;: 47,
+    &quot;angle&quot;: 90,
+    &quot;distance&quot;: 4,
+    &quot;rotWithShape&quot;: false,
+    &quot;scaleX&quot;: 1.08,
+    &quot;scaleY&quot;: 1.08,
+    &quot;fillStyle&quot;: {
+      &quot;type&quot;: &quot;color&quot;,
+      &quot;color&quot;: {
+        &quot;realColor&quot;: 721420288,
+        &quot;color&quot;: -16777216,
+        &quot;alpha&quot;: 17000
+      }
+    }
+  }
+}</code></pre></figure>
+<p>设置效果：</p>
+<ul><li>增大 <code>blur</code>：阴影更柔和，扩散范围更大。</li><li>增大 <code>distance</code>：阴影离对象更远，方向由 <code>angle</code> 决定。</li><li>设置较低 <code>alpha</code>：阴影更淡。</li><li>设置 <code>scaleX</code> / <code>scaleY</code> 大于 <code>1</code>：阴影面积略大于对象，类似外阴影。</li></ul>
+<p>限制：</p>
+<ul><li><code>fillStyle</code> 应使用颜色填充。渐变或图片阴影可能无法被所有渲染器支持。</li><li><code>blur</code> 和 <code>distance</code> 不建议使用负数。</li><li>如果对象本身透明或无填充，阴影仍应按对象几何轮廓计算。</li></ul>
+<h2 id="common-property-effectlst"><a class="anchor" href="#common-property-effectlst" aria-label="定位到 `effectLst`">#</a><code>effectLst</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type EffectList = Record&lt;string, unknown&gt;</code></pre></figure>
+<p><code>effectLst</code> 用于保留额外效果列表。当前可为空对象。第三方实现如果不能识别其中的效果，应保留原值并透传。</p>
+<h2 id="common-property-hyperlink"><a class="anchor" href="#common-property-hyperlink" aria-label="定位到 `hyperlink`">#</a><code>hyperlink</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Hyperlink = {
+  type: string
+  label?: string
+  address: string
+  action?: string
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>type</code></td><td>链接类型，例如 <code>URL</code>。</td></tr>
+<tr><td><code>label</code></td><td>链接显示名称。可以为空字符串。</td></tr>
+<tr><td><code>address</code></td><td>链接地址或动作地址。</td></tr>
+<tr><td><code>action</code></td><td>动作指令。媒体播放可使用 <code>ppaction://media</code>。</td></tr></tbody></table></div>
+<p>示例：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;hyperlink&quot;: {
+    &quot;type&quot;: &quot;URL&quot;,
+    &quot;label&quot;: &quot;&quot;,
+    &quot;address&quot;: &quot;ppaction://media&quot;,
+    &quot;action&quot;: &quot;ppaction://media&quot;
+  }
+}</code></pre></figure>
+<p>媒体对象通常使用 <code>ppaction://media</code> 触发播放行为。普通网页跳转可把 <code>address</code> 设置为 URL。</p>
+                </div>
+              </article>
+<article class="doc-section" id="text" data-section="text">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">protocol/object/text.md</p>
+                    <h2>文本对象</h2>
+                    <p>文本框、段落、文本片段和富文本组合。</p>
+                  </div>
+                  <a class="source-link" href="source/protocol/object/text.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="text-文本对象"><a class="anchor" href="#text-文本对象" aria-label="定位到 文本对象">#</a>文本对象</h1>
+<p>文本由三层节点组成：</p>
+<figure class="code-card"><figcaption>text</figcaption><pre><code>text
+└── p[]
+    └── r[]</code></pre></figure>
+<ul><li><code>text</code> 表示文本框或文本形状，负责位置、形状、背景、边框、阴影和文本容器设置。</li><li><code>p</code> 表示段落，负责段落对齐、项目符号、缩进、行距和段间距。</li><li><code>r</code> 表示文本片段，负责实际字符串和字符级样式。</li></ul>
+<h2 id="text-text"><a class="anchor" href="#text-text" aria-label="定位到 `text`">#</a><code>text</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type TextElement = ElementNode &amp; {
+  type: &quot;text&quot;
+  point: Box
+  extInfo: {
+    property: TextProperty
+  }
+  children: ParagraphNode[]
+}</code></pre></figure>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type TextProperty = {
+  realType: &quot;Auto&quot; | &quot;TextBox&quot;
+  anchor: Box
+  placeholder?: Placeholder
+  shapeType?: string
+  fillStyle?: FillStyle
+  strokeStyle?: StrokeStyle
+  geometry?: Geometry
+  shadow?: Shadow
+  effectLst?: Record&lt;string, unknown&gt;
+  rotation?: number
+  textAutofit?: &quot;NONE&quot; | &quot;NORMAL&quot; | &quot;SHAPE&quot;
+  textDirection?: &quot;HORIZONTAL&quot; | &quot;EA_VERTICAL&quot;
+  textVerticalAlignment?: &quot;TOP&quot; | &quot;MIDDLE&quot; | &quot;BOTTOM&quot;
+  textWordWrap?: boolean
+  textInsets?: [number, number, number, number]
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>设置方式</th><th>效果</th></tr></thead><tbody><tr><td><code>realType</code></td><td>显式文本框使用 <code>TextBox</code>；占位符或自动形状文本使用 <code>Auto</code>。</td><td>控制 PPTX 语义类型。</td></tr>
+<tr><td><code>anchor</code></td><td><code>[x, y, width, height]</code>。</td><td>定义文本容器区域。</td></tr>
+<tr><td><code>placeholder</code></td><td>文本表示版式占位符时设置。</td><td>用于版式匹配和默认样式继承。</td></tr>
+<tr><td><code>shapeType</code></td><td>通常为 <code>rect</code>。</td><td>决定外框形状类别。</td></tr>
+<tr><td><code>fillStyle</code></td><td>使用 <code>noFill</code>、<code>color</code>、<code>gradient</code> 或 <code>texture</code>。</td><td>设置文本框背景。</td></tr>
+<tr><td><code>strokeStyle</code></td><td>设置线条填充、线宽和虚线样式。</td><td>设置文本框边框。</td></tr>
+<tr><td><code>geometry</code></td><td>通常为 <code>{ &quot;name&quot;: &quot;rect&quot; }</code>。</td><td>定义形状轮廓和文本边界。</td></tr>
+<tr><td><code>shadow</code></td><td>设置公共阴影对象。</td><td>给文本框形状添加阴影。</td></tr>
+<tr><td><code>rotation</code></td><td>角度数值。</td><td>旋转整个文本框。</td></tr>
+<tr><td><code>textAutofit</code></td><td><code>NONE</code>、<code>NORMAL</code> 或 <code>SHAPE</code>。</td><td>控制文本如何适应框大小。</td></tr>
+<tr><td><code>textDirection</code></td><td><code>HORIZONTAL</code> 或 <code>EA_VERTICAL</code>。</td><td>横排或东亚竖排文本。</td></tr>
+<tr><td><code>textVerticalAlignment</code></td><td><code>TOP</code>、<code>MIDDLE</code>、<code>BOTTOM</code>。</td><td>控制文本在框内的垂直位置。</td></tr>
+<tr><td><code>textWordWrap</code></td><td><code>true</code> 或 <code>false</code>。</td><td>启用或禁用自动换行。</td></tr>
+<tr><td><code>textInsets</code></td><td><code>[top, right, bottom, left]</code>。</td><td>设置边框和文本之间的内边距。</td></tr></tbody></table></div>
+<h3 id="text-文本自适应"><a class="anchor" href="#text-文本自适应" aria-label="定位到 文本自适应">#</a>文本自适应</h3>
+<div class="table-wrap"><table><thead><tr><th>值</th><th>行为</th></tr></thead><tbody><tr><td><code>NONE</code></td><td>文本保持原字号，可能溢出文本框。</td></tr>
+<tr><td><code>NORMAL</code></td><td>文本可以缩小以适配可用区域。</td></tr>
+<tr><td><code>SHAPE</code></td><td>形状或文本框可以调整，使内容更容易完整显示。</td></tr></tbody></table></div>
+<p>需要精确保留字号时使用 <code>NONE</code>。导入 PPTX 内容且希望尽量保持文字可见时使用 <code>SHAPE</code>。</p>
+<h3 id="text-自动换行和内边距"><a class="anchor" href="#text-自动换行和内边距" aria-label="定位到 自动换行和内边距">#</a>自动换行和内边距</h3>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;textWordWrap&quot;: true,
+  &quot;textInsets&quot;: [3.6, 7.2, 3.6, 7.2]
+}</code></pre></figure>
+<ul><li><code>textWordWrap: true</code> 让长文本在 <code>anchor.width</code> 范围内自动换行。</li><li><code>textWordWrap: false</code> 允许长行横向溢出。</li><li>左右内边距越大，可用文本宽度越小。</li><li>上下内边距越大，可用文本高度越小。</li></ul>
+<h2 id="text-p"><a class="anchor" href="#text-p" aria-label="定位到 `p`">#</a><code>p</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type ParagraphNode = ElementNode &amp; {
+  type: &quot;p&quot;
+  text?: string
+  extInfo: {
+    property: ParagraphProperty
+  }
+  children: RunNode[]
+}</code></pre></figure>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type ParagraphProperty = {
+  fontAlign?: &quot;AUTO&quot;
+  textAlign?: &quot;LEFT&quot; | &quot;CENTER&quot; | &quot;RIGHT&quot;
+  indent?: number
+  indentLevel?: number
+  bulletStyle?: BulletStyle
+  leftMargin?: number
+  lineSpacing?: number
+  spaceBefore?: number
+  spaceAfter?: number
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>设置方式</th><th>效果</th></tr></thead><tbody><tr><td><code>fontAlign</code></td><td><code>AUTO</code>。</td><td>使用自动字体对齐。</td></tr>
+<tr><td><code>textAlign</code></td><td><code>LEFT</code>、<code>CENTER</code>、<code>RIGHT</code>。</td><td>控制段落水平对齐。</td></tr>
+<tr><td><code>indent</code></td><td>数值，可为负数。</td><td>控制首行或项目符号缩进。</td></tr>
+<tr><td><code>indentLevel</code></td><td>非负整数。</td><td>控制段落嵌套层级。</td></tr>
+<tr><td><code>bulletStyle</code></td><td><code>{ &quot;buNone&quot;: true }</code> 或项目符号字符配置。</td><td>禁用或启用项目符号。</td></tr>
+<tr><td><code>leftMargin</code></td><td>数值。</td><td>让段落内容离左边缘更远。</td></tr>
+<tr><td><code>lineSpacing</code></td><td>数值。</td><td>控制行间距。值越大行距越松。</td></tr>
+<tr><td><code>spaceBefore</code></td><td>数值。</td><td>增加段前间距。</td></tr>
+<tr><td><code>spaceAfter</code></td><td>数值。</td><td>增加段后间距。可使用负数压缩段落间距。</td></tr></tbody></table></div>
+<h3 id="text-项目符号样式"><a class="anchor" href="#text-项目符号样式" aria-label="定位到 项目符号样式">#</a>项目符号样式</h3>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type BulletStyle =
+  | { buNone: true }
+  | { bulletCharacter: string; bulletFont: string }</code></pre></figure>
+<p>无项目符号：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;bulletStyle&quot;: { &quot;buNone&quot;: true }
+}</code></pre></figure>
+<p>项目符号列表：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;indent&quot;: -22.5,
+  &quot;leftMargin&quot;: 22.5,
+  &quot;bulletStyle&quot;: {
+    &quot;bulletCharacter&quot;: &quot;•&quot;,
+    &quot;bulletFont&quot;: &quot;Arial&quot;
+  }
+}</code></pre></figure>
+<p>设置项目符号时，通常同时设置：</p>
+<ul><li><code>leftMargin</code>：正文整体左移距离。</li><li><code>indent</code>：项目符号和正文的相对位置。负数会让项目符号位于正文左侧。</li><li><code>bulletCharacter</code>：项目符号字符。</li><li><code>bulletFont</code>：项目符号字体。</li></ul>
+<h2 id="text-r"><a class="anchor" href="#text-r" aria-label="定位到 `r`">#</a><code>r</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type RunNode = ElementNode &amp; {
+  type: &quot;r&quot;
+  text: string
+  extInfo: {
+    property: RunProperty
+  }
+  children: []
+}</code></pre></figure>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type RunProperty = {
+  fontSize?: number
+  bold?: boolean
+  characterSpacing?: number
+  fontFamily?: string
+  fontColor?: { type: &quot;color&quot;; color: ColorValue }
+  highlightColor?: number
+  slideNum?: boolean
+  lang?: string
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>设置方式</th><th>效果</th></tr></thead><tbody><tr><td><code>fontSize</code></td><td>数值。</td><td>设置文本字号。</td></tr>
+<tr><td><code>bold</code></td><td><code>true</code> 或缺失。</td><td>让该文本片段加粗。</td></tr>
+<tr><td><code>characterSpacing</code></td><td>数值。</td><td>增加字符间距。</td></tr>
+<tr><td><code>fontFamily</code></td><td>字体名称。</td><td>设置文本片段字体。</td></tr>
+<tr><td><code>fontColor</code></td><td>颜色填充对象。</td><td>设置文本颜色。</td></tr>
+<tr><td><code>highlightColor</code></td><td>颜色数值。</td><td>在文字字形后添加高亮。</td></tr>
+<tr><td><code>slideNum</code></td><td><code>true</code>。</td><td>标记该文本片段为页码占位文本。</td></tr>
+<tr><td><code>lang</code></td><td>类似 BCP-47 的语言标签，例如 <code>zh-CN</code> 或 <code>en-US</code>。</td><td>帮助字体回退和文本排版。</td></tr></tbody></table></div>
+<h2 id="text-富文本组合"><a class="anchor" href="#text-富文本组合" aria-label="定位到 富文本组合">#</a>富文本组合</h2>
+<p>一段富文本应该用一个 <code>p</code> 包住多个 <code>r</code>。每个 <code>r</code> 只负责一段连续样式一致的文本。</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;id&quot;: &quot;text-1&quot;,
+  &quot;type&quot;: &quot;text&quot;,
+  &quot;depth&quot;: 1,
+  &quot;point&quot;: [80, 80, 360, 120],
+  &quot;extInfo&quot;: {
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;TextBox&quot;,
+      &quot;shapeType&quot;: &quot;rect&quot;,
+      &quot;anchor&quot;: [80, 80, 360, 120],
+      &quot;fillStyle&quot;: { &quot;type&quot;: &quot;noFill&quot; },
+      &quot;geometry&quot;: { &quot;name&quot;: &quot;rect&quot;, &quot;data&quot;: null, &quot;avLst&quot;: null, &quot;textBounds&quot;: null },
+      &quot;textAutofit&quot;: &quot;SHAPE&quot;,
+      &quot;textDirection&quot;: &quot;HORIZONTAL&quot;,
+      &quot;textVerticalAlignment&quot;: &quot;TOP&quot;,
+      &quot;textWordWrap&quot;: true,
+      &quot;textInsets&quot;: [3.6, 7.2, 3.6, 7.2]
+    }
+  },
+  &quot;children&quot;: [
+    {
+      &quot;id&quot;: &quot;p-1&quot;,
+      &quot;pid&quot;: &quot;text-1&quot;,
+      &quot;type&quot;: &quot;p&quot;,
+      &quot;depth&quot;: 2,
+      &quot;extInfo&quot;: {
+        &quot;property&quot;: {
+          &quot;textAlign&quot;: &quot;LEFT&quot;,
+          &quot;leftMargin&quot;: 0,
+          &quot;lineSpacing&quot;: 120
+        }
+      },
+      &quot;children&quot;: [
+        {
+          &quot;id&quot;: &quot;r-1&quot;,
+          &quot;pid&quot;: &quot;p-1&quot;,
+          &quot;type&quot;: &quot;r&quot;,
+          &quot;text&quot;: &quot;你好，&quot;,
+          &quot;depth&quot;: 3,
+          &quot;extInfo&quot;: {
+            &quot;property&quot;: {
+              &quot;fontSize&quot;: 18,
+              &quot;bold&quot;: true,
+              &quot;fontFamily&quot;: &quot;苹方-简&quot;,
+              &quot;fontColor&quot;: {
+                &quot;type&quot;: &quot;color&quot;,
+                &quot;color&quot;: { &quot;realColor&quot;: -16777216, &quot;color&quot;: -16777216 }
+              },
+              &quot;lang&quot;: &quot;zh-CN&quot;
+            }
+          },
+          &quot;children&quot;: []
+        },
+        {
+          &quot;id&quot;: &quot;r-2&quot;,
+          &quot;pid&quot;: &quot;p-1&quot;,
+          &quot;type&quot;: &quot;r&quot;,
+          &quot;text&quot;: &quot;世界&quot;,
+          &quot;depth&quot;: 3,
+          &quot;extInfo&quot;: {
+            &quot;property&quot;: {
+              &quot;fontSize&quot;: 18,
+              &quot;fontFamily&quot;: &quot;苹方-简&quot;,
+              &quot;fontColor&quot;: {
+                &quot;type&quot;: &quot;color&quot;,
+                &quot;color&quot;: { &quot;scheme&quot;: &quot;accent1&quot;, &quot;realColor&quot;: -12028725, &quot;color&quot;: -12028725 }
+              },
+              &quot;highlightColor&quot;: -256,
+              &quot;lang&quot;: &quot;zh-CN&quot;
+            }
+          },
+          &quot;children&quot;: []
+        }
+      ]
+    }
+  ]
+}</code></pre></figure>
+<p>渲染结果：</p>
+<ul><li><code>你好，</code> 加粗。</li><li><code>世界</code> 使用主题色并带高亮。</li><li>两段文字在同一段落中连续排版。</li></ul>
+<h2 id="text-多段文本"><a class="anchor" href="#text-多段文本" aria-label="定位到 多段文本">#</a>多段文本</h2>
+<p>多段文本用多个 <code>p</code> 表示。每个段落可以有不同对齐、项目符号和行距。</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;children&quot;: [
+    {
+      &quot;id&quot;: &quot;p-title&quot;,
+      &quot;type&quot;: &quot;p&quot;,
+      &quot;depth&quot;: 2,
+      &quot;extInfo&quot;: { &quot;property&quot;: { &quot;textAlign&quot;: &quot;CENTER&quot;, &quot;spaceAfter&quot;: 8 } },
+      &quot;children&quot;: [
+        { &quot;id&quot;: &quot;r-title&quot;, &quot;type&quot;: &quot;r&quot;, &quot;text&quot;: &quot;标题&quot;, &quot;depth&quot;: 3, &quot;extInfo&quot;: { &quot;property&quot;: { &quot;fontSize&quot;: 28, &quot;bold&quot;: true } }, &quot;children&quot;: [] }
+      ]
+    },
+    {
+      &quot;id&quot;: &quot;p-body&quot;,
+      &quot;type&quot;: &quot;p&quot;,
+      &quot;depth&quot;: 2,
+      &quot;extInfo&quot;: {
+        &quot;property&quot;: {
+          &quot;textAlign&quot;: &quot;LEFT&quot;,
+          &quot;leftMargin&quot;: 22.5,
+          &quot;indent&quot;: -22.5,
+          &quot;bulletStyle&quot;: { &quot;bulletCharacter&quot;: &quot;•&quot;, &quot;bulletFont&quot;: &quot;Arial&quot; }
+        }
+      },
+      &quot;children&quot;: [
+        { &quot;id&quot;: &quot;r-body&quot;, &quot;type&quot;: &quot;r&quot;, &quot;text&quot;: &quot;项目内容&quot;, &quot;depth&quot;: 3, &quot;extInfo&quot;: { &quot;property&quot;: { &quot;fontSize&quot;: 18 } }, &quot;children&quot;: [] }
+      ]
+    }
+  ]
+}</code></pre></figure>
+<h2 id="text-空段落"><a class="anchor" href="#text-空段落" aria-label="定位到 空段落">#</a>空段落</h2>
+<p>空段落可以使用：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;id&quot;: &quot;p-empty&quot;,
+  &quot;type&quot;: &quot;p&quot;,
+  &quot;text&quot;: &quot;&quot;,
+  &quot;depth&quot;: 2,
+  &quot;extInfo&quot;: {
+    &quot;property&quot;: {
+      &quot;textAlign&quot;: &quot;LEFT&quot;,
+      &quot;leftMargin&quot;: 0
+    }
+  },
+  &quot;children&quot;: []
+}</code></pre></figure>
+<p>空段落用于保留换行、占位内容或编辑器光标位置。</p>
+                </div>
+              </article>
+<article class="doc-section" id="image" data-section="image">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">protocol/object/image.md</p>
+                    <h2>图片对象</h2>
+                    <p>图片资源、不透明度、裁剪和媒体封面。</p>
+                  </div>
+                  <a class="source-link" href="source/protocol/object/image.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="image-图片对象"><a class="anchor" href="#image-图片对象" aria-label="定位到 图片对象">#</a>图片对象</h1>
+<p><code>image</code> 表示图片对象。它也可以作为音频或视频媒体的封面对象，媒体资源通过额外字段挂在 <code>extInfo.property</code> 上。</p>
+<h2 id="image-结构"><a class="anchor" href="#image-结构" aria-label="定位到 结构">#</a>结构</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type ImageElement = ElementNode &amp; {
+  type: &quot;image&quot;
+  point: Box
+  extInfo: {
+    property: ImageProperty
+  }
+  children: []
+}</code></pre></figure>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type ImageProperty = {
+  realType: &quot;Picture&quot;
+  shapeType: string
+  anchor: Box
+  rotation?: number
+  fillStyle: { type: &quot;texture&quot;; texture: TextureFill }
+  geometry: Geometry
+  shadow?: Shadow
+  hyperlink?: Hyperlink
+  fileName?: string
+  image: string
+  clipping?: [left: number, top: number, right: number, bottom: number]
+  extension?: string
+  contentType?: string
+  imageAlpha?: number
+  fillAlpha?: number
+  audio?: string
+  video?: string
+  extContentType?: string
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>设置方式</th><th>效果</th></tr></thead><tbody><tr><td><code>realType</code></td><td><code>Picture</code>。</td><td>标记该对象为图片形状。</td></tr>
+<tr><td><code>shapeType</code></td><td>通常为 <code>rect</code>。</td><td>定义外部裁剪形状。</td></tr>
+<tr><td><code>anchor</code></td><td><code>[x, y, width, height]</code>。</td><td>设置图片位置和尺寸。</td></tr>
+<tr><td><code>rotation</code></td><td>角度数值。</td><td>旋转图片对象。</td></tr>
+<tr><td><code>fillStyle</code></td><td>纹理填充。</td><td>提供实际显示的图片像素。</td></tr>
+<tr><td><code>geometry</code></td><td>通常为 <code>rect</code>。</td><td>定义图片轮廓。</td></tr>
+<tr><td><code>shadow</code></td><td>公共阴影对象。</td><td>添加图片阴影。</td></tr>
+<tr><td><code>hyperlink</code></td><td>超链接对象。</td><td>添加点击动作；媒体对象使用 <code>ppaction://media</code>。</td></tr>
+<tr><td><code>fileName</code></td><td>文件名。</td><td>保留源文件身份。</td></tr>
+<tr><td><code>image</code></td><td>URL 或 <code>data:image/...</code>。</td><td>主图片资源。</td></tr>
+<tr><td><code>clipping</code></td><td>四数值裁剪数组。</td><td>显示前裁剪图片。</td></tr>
+<tr><td><code>extension</code></td><td>文件扩展名。</td><td>辅助导出和 MIME 推断。</td></tr>
+<tr><td><code>contentType</code></td><td>MIME 类型。</td><td>描述图片类型。</td></tr>
+<tr><td><code>imageAlpha</code></td><td><code>0..100000</code>。</td><td>控制图片不透明度。</td></tr>
+<tr><td><code>fillAlpha</code></td><td><code>0..100000</code>。</td><td>控制纹理填充不透明度。</td></tr>
+<tr><td><code>audio</code></td><td><code>data:audio/...</code> 或 URL。</td><td>让该图片表示音频对象。</td></tr>
+<tr><td><code>video</code></td><td><code>data:video/...</code> 或 URL。</td><td>让该图片表示视频对象。</td></tr>
+<tr><td><code>extContentType</code></td><td>MIME 类型。</td><td>描述外部媒体类型，例如 <code>audio/mp3</code>。</td></tr></tbody></table></div>
+<h2 id="image-基础图片"><a class="anchor" href="#image-基础图片" aria-label="定位到 基础图片">#</a>基础图片</h2>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;id&quot;: &quot;image-1&quot;,
+  &quot;type&quot;: &quot;image&quot;,
+  &quot;depth&quot;: 1,
+  &quot;point&quot;: [100, 80, 200, 120],
+  &quot;extInfo&quot;: {
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;Picture&quot;,
+      &quot;shapeType&quot;: &quot;rect&quot;,
+      &quot;anchor&quot;: [100, 80, 200, 120],
+      &quot;fillStyle&quot;: {
+        &quot;type&quot;: &quot;texture&quot;,
+        &quot;texture&quot;: {
+          &quot;imageData&quot;: &quot;https://example.com/image.png&quot;,
+          &quot;contentType&quot;: &quot;image/png&quot;,
+          &quot;alpha&quot;: 100000,
+          &quot;flipMode&quot;: &quot;NONE&quot;,
+          &quot;stretch&quot;: [0, 0, 0, 0]
+        }
+      },
+      &quot;geometry&quot;: { &quot;name&quot;: &quot;rect&quot;, &quot;data&quot;: null, &quot;avLst&quot;: null, &quot;textBounds&quot;: null },
+      &quot;fileName&quot;: &quot;image.png&quot;,
+      &quot;image&quot;: &quot;https://example.com/image.png&quot;,
+      &quot;extension&quot;: &quot;.png&quot;,
+      &quot;contentType&quot;: &quot;image/png&quot;,
+      &quot;imageAlpha&quot;: 100000,
+      &quot;fillAlpha&quot;: 100000
+    }
+  },
+  &quot;children&quot;: []
+}</code></pre></figure>
+<h2 id="image-图片资源字段"><a class="anchor" href="#image-图片资源字段" aria-label="定位到 图片资源字段">#</a>图片资源字段</h2>
+<p>除非有意区分缩略图和原图，否则 <code>image</code> 与 <code>fillStyle.texture.imageData</code> 应指向同一份视觉资源。</p>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>推荐用途</th></tr></thead><tbody><tr><td><code>image</code></td><td>需要读取图片内容的消费端使用的主资源。</td></tr>
+<tr><td><code>fillStyle.texture.imageData</code></td><td>形状填充或渲染逻辑使用的资源。</td></tr>
+<tr><td><code>fileName</code></td><td>可获得时保留原始文件名。</td></tr>
+<tr><td><code>extension</code></td><td>文件后缀，例如 <code>.png</code>、<code>.jpg</code>。</td></tr>
+<tr><td><code>contentType</code></td><td>MIME 类型，例如 <code>image/png</code>、<code>image/jpeg</code>。</td></tr></tbody></table></div>
+<p>使用 Base64 时，应包含完整的数据 URI 前缀：</p>
+<figure class="code-card"><figcaption>text</figcaption><pre><code>data:image/png;base64,...</code></pre></figure>
+<h2 id="image-不透明度"><a class="anchor" href="#image-不透明度" aria-label="定位到 不透明度">#</a>不透明度</h2>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;imageAlpha&quot;: 50000,
+  &quot;fillAlpha&quot;: 50000,
+  &quot;fillStyle&quot;: {
+    &quot;type&quot;: &quot;texture&quot;,
+    &quot;texture&quot;: {
+      &quot;alpha&quot;: 50000
+    }
+  }
+}</code></pre></figure>
+<p>不透明度字段使用 <code>0..100000</code>：</p>
+<div class="table-wrap"><table><thead><tr><th>值</th><th>效果</th></tr></thead><tbody><tr><td><code>100000</code></td><td>完全不透明。</td></tr>
+<tr><td><code>50000</code></td><td>约 50% 不透明。</td></tr>
+<tr><td><code>0</code></td><td>完全透明。</td></tr></tbody></table></div>
+<p>除非渲染器明确需要分开处理，否则建议 <code>imageAlpha</code>、<code>fillAlpha</code> 和 <code>texture.alpha</code> 使用相同值。</p>
+<h2 id="image-裁剪"><a class="anchor" href="#image-裁剪" aria-label="定位到 裁剪">#</a>裁剪</h2>
+<p>图片裁剪可以通过两个字段表达：</p>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type Crop = [left: number, top: number, right: number, bottom: number]</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>位置</th><th>说明</th></tr></thead><tbody><tr><td><code>clipping</code></td><td><code>ImageProperty</code></td><td>对图片资源的裁剪参数。</td></tr>
+<tr><td><code>fillStyle.texture.insets</code></td><td><code>TextureFill</code></td><td>纹理填充裁剪参数。</td></tr></tbody></table></div>
+<p>推荐同时设置两者，并保持值一致：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;clipping&quot;: [71667, 0, 0, 48134],
+  &quot;fillStyle&quot;: {
+    &quot;type&quot;: &quot;texture&quot;,
+    &quot;texture&quot;: {
+      &quot;imageData&quot;: &quot;data:image/png;base64,...&quot;,
+      &quot;contentType&quot;: &quot;image/png&quot;,
+      &quot;alpha&quot;: 100000,
+      &quot;flipMode&quot;: &quot;NONE&quot;,
+      &quot;insets&quot;: [71667, 0, 0, 48134]
+    }
+  }
+}</code></pre></figure>
+<p>裁剪效果：</p>
+<ul><li><code>left</code> 增大：从图片左侧向内裁剪。</li><li><code>top</code> 增大：从图片顶部向内裁剪。</li><li><code>right</code> 增大：从图片右侧向内裁剪。</li><li><code>bottom</code> 增大：从图片底部向内裁剪。</li></ul>
+<p>限制：</p>
+<ul><li>裁剪值不应让可见区域宽度或高度变为 <code>0</code> 或负数。</li><li>裁剪后图片仍会被映射到 <code>anchor</code> 区域。</li><li>如果只设置 <code>clipping</code> 而不设置 <code>texture.insets</code>，部分渲染器可能只在导出阶段裁剪，预览不裁剪。</li></ul>
+<h2 id="image-拉伸-裁剪和平铺"><a class="anchor" href="#image-拉伸-裁剪和平铺" aria-label="定位到 拉伸、裁剪和平铺">#</a>拉伸、裁剪和平铺</h2>
+<div class="table-wrap"><table><thead><tr><th>模式</th><th>字段</th><th>效果</th></tr></thead><tbody><tr><td>拉伸</td><td><code>texture.stretch</code></td><td>图片拉伸填满对象，可能改变比例。</td></tr>
+<tr><td>裁剪</td><td><code>clipping</code> + <code>texture.insets</code></td><td>裁剪图片后填充对象。</td></tr>
+<tr><td>平铺/缩放</td><td><code>texture.scale</code>, <code>texture.offset</code>, <code>texture.alignment</code></td><td>缩放或平铺图片，适合纹理图案。</td></tr></tbody></table></div>
+<p>详见 <a href="#common-property">common-property.md</a> 的 <code>TextureFill</code>。</p>
+<h2 id="image-图片作为媒体封面"><a class="anchor" href="#image-图片作为媒体封面" aria-label="定位到 图片作为媒体封面">#</a>图片作为媒体封面</h2>
+<p>音频或视频对象可以使用 <code>image</code> 作为封面/播放按钮。媒体资源放在 <code>audio</code> 或 <code>video</code> 字段中。</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;type&quot;: &quot;image&quot;,
+  &quot;point&quot;: [447.5, 237.5, 65, 65],
+  &quot;extInfo&quot;: {
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;Picture&quot;,
+      &quot;shapeType&quot;: &quot;rect&quot;,
+      &quot;anchor&quot;: [447.5, 237.5, 65, 65],
+      &quot;fillStyle&quot;: {
+        &quot;type&quot;: &quot;texture&quot;,
+        &quot;texture&quot;: {
+          &quot;imageData&quot;: &quot;data:image/png;base64,...&quot;,
+          &quot;contentType&quot;: &quot;image/png&quot;,
+          &quot;alpha&quot;: 100000,
+          &quot;flipMode&quot;: &quot;NONE&quot;,
+          &quot;stretch&quot;: [0, 0, 0, 0]
+        }
+      },
+      &quot;hyperlink&quot;: {
+        &quot;type&quot;: &quot;URL&quot;,
+        &quot;label&quot;: &quot;&quot;,
+        &quot;address&quot;: &quot;ppaction://media&quot;,
+        &quot;action&quot;: &quot;ppaction://media&quot;
+      },
+      &quot;geometry&quot;: { &quot;name&quot;: &quot;rect&quot;, &quot;data&quot;: null, &quot;avLst&quot;: null, &quot;textBounds&quot;: null },
+      &quot;image&quot;: &quot;data:image/png;base64,...&quot;,
+      &quot;audio&quot;: &quot;data:audio/mp3;base64,...&quot;,
+      &quot;extContentType&quot;: &quot;audio/mp3&quot;
+    }
+  },
+  &quot;children&quot;: []
+}</code></pre></figure>
+<p>媒体播放相关信息还需要在页面 <code>extInfo.animationExt</code> 或 <code>extInfo.animation</code> 中描述。详见 <a href="#other-objects">other-objects.md</a>。</p>
+                </div>
+              </article>
+<article class="doc-section" id="table" data-section="table">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">protocol/object/table.md</p>
+                    <h2>表格对象</h2>
+                    <p>表格、行、单元格、合并单元格和单元格文本。</p>
+                  </div>
+                  <a class="source-link" href="source/protocol/object/table.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="table-表格对象"><a class="anchor" href="#table-表格对象" aria-label="定位到 表格对象">#</a>表格对象</h1>
+<p>表格由三层节点组成：</p>
+<figure class="code-card"><figcaption>text</figcaption><pre><code>table
+└── tableRow[]
+    └── tableColumn[]
+        └── p[]
+            └── r[]</code></pre></figure>
+<p><code>tableColumn</code> 表示单元格，而不是物理列。单元格文本使用与普通文本相同的 <code>p -&gt; r</code> 结构。</p>
+<h2 id="table-table"><a class="anchor" href="#table-table" aria-label="定位到 `table`">#</a><code>table</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type TableElement = ElementNode &amp; {
+  type: &quot;table&quot;
+  point: Box
+  extInfo: {
+    property: TableProperty
+  }
+  children: TableRowNode[]
+}</code></pre></figure>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type TableProperty = {
+  anchor: Box
+  realType: &quot;table&quot;
+  numberOfColumns: number
+  numberOfRows: number
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>设置方式</th><th>效果</th></tr></thead><tbody><tr><td><code>anchor</code></td><td><code>[x, y, width, height]</code>。</td><td>定义完整表格区域。</td></tr>
+<tr><td><code>realType</code></td><td><code>table</code>。</td><td>标记该节点为表格。</td></tr>
+<tr><td><code>numberOfColumns</code></td><td>正整数。</td><td>定义逻辑列数。</td></tr>
+<tr><td><code>numberOfRows</code></td><td>正整数。</td><td>定义逻辑行数。</td></tr></tbody></table></div>
+<p><code>numberOfColumns</code> 和 <code>numberOfRows</code> 描述逻辑网格大小。由于存在合并单元格，实际 <code>tableRow.children.length</code> 可以小于 <code>numberOfColumns</code>。</p>
+<h2 id="table-tablerow"><a class="anchor" href="#table-tablerow" aria-label="定位到 `tableRow`">#</a><code>tableRow</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type TableRowNode = ElementNode &amp; {
+  type: &quot;tableRow&quot;
+  extInfo: {
+    property: TableRowProperty
+  }
+  children: TableColumnNode[]
+}
+
+type TableRowProperty = {
+  rowHeight: number
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>设置方式</th><th>效果</th></tr></thead><tbody><tr><td><code>rowHeight</code></td><td>大于 <code>0</code> 的数值。</td><td>设置行高。除垂直合并单元格外，同一行内所有单元格都应对齐到该高度。</td></tr></tbody></table></div>
+<h2 id="table-tablecolumn"><a class="anchor" href="#table-tablecolumn" aria-label="定位到 `tableColumn`">#</a><code>tableColumn</code></h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type TableColumnNode = ElementNode &amp; {
+  type: &quot;tableColumn&quot;
+  extInfo: {
+    rowSpan?: number
+    gridSpan?: number
+    property: TableCellProperty
+  }
+  children: ParagraphNode[]
+}</code></pre></figure>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type TableCellProperty = {
+  realType: &quot;TableCell&quot;
+  anchor: Box
+  fillStyle?: FillStyle
+  strokeStyle?: StrokeStyle
+  geometry?: Geometry
+  textDirection?: &quot;HORIZONTAL&quot; | &quot;EA_VERTICAL&quot;
+  textVerticalAlignment?: &quot;TOP&quot; | &quot;MIDDLE&quot; | &quot;BOTTOM&quot;
+  textInsets?: [number, number, number, number]
+  columnWidth?: number
+  borders?: BorderStyle[]
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>设置方式</th><th>效果</th></tr></thead><tbody><tr><td><code>rowSpan</code></td><td><code>extInfo</code> 中的整数。</td><td>将该单元格向下合并多行。</td></tr>
+<tr><td><code>gridSpan</code></td><td><code>extInfo</code> 中的整数。</td><td>将该单元格向右合并多列。</td></tr>
+<tr><td><code>realType</code></td><td><code>TableCell</code>。</td><td>标记该节点为表格单元格。</td></tr>
+<tr><td><code>anchor</code></td><td><code>[x, y, width, height]</code>。</td><td>定义实际单元格区域。合并单元格应有更大的宽度或高度。</td></tr>
+<tr><td><code>fillStyle</code></td><td>填充样式。</td><td>设置单元格背景。</td></tr>
+<tr><td><code>strokeStyle</code></td><td>边框样式。</td><td>设置默认单元格边框样式。</td></tr>
+<tr><td><code>geometry</code></td><td>通常为 <code>tableColumn</code>。</td><td>定义单元格几何。</td></tr>
+<tr><td><code>textDirection</code></td><td><code>HORIZONTAL</code> 或 <code>EA_VERTICAL</code>。</td><td>设置单元格文本方向。</td></tr>
+<tr><td><code>textVerticalAlignment</code></td><td><code>TOP</code>、<code>MIDDLE</code>、<code>BOTTOM</code>。</td><td>设置文本在单元格内的垂直对齐。</td></tr>
+<tr><td><code>textInsets</code></td><td><code>[top, right, bottom, left]</code>。</td><td>设置单元格文本内边距。</td></tr>
+<tr><td><code>columnWidth</code></td><td>数值。</td><td>一个逻辑列的基础宽度。</td></tr>
+<tr><td><code>borders</code></td><td><code>BorderStyle[]</code>。</td><td>设置每条边的边框。</td></tr></tbody></table></div>
+<h2 id="table-边框"><a class="anchor" href="#table-边框" aria-label="定位到 边框">#</a>边框</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type BorderStyle = {
+  color: ColorValue | null
+  lineWidth: number | null
+  lineCap: string | null
+  lineDash: string | null
+  lineCompound: string | null
+}</code></pre></figure>
+<p><code>borders</code> 是四边边框数组。实现方应保持数组顺序稳定，并在自身系统中明确边顺序映射。若边框项字段为 <code>null</code>，表示该边使用默认样式或无显式设置。</p>
+<p>示例：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;borders&quot;: [
+    { &quot;color&quot;: null, &quot;lineWidth&quot;: null, &quot;lineCap&quot;: null, &quot;lineDash&quot;: null, &quot;lineCompound&quot;: null },
+    { &quot;color&quot;: null, &quot;lineWidth&quot;: null, &quot;lineCap&quot;: null, &quot;lineDash&quot;: null, &quot;lineCompound&quot;: null },
+    { &quot;color&quot;: null, &quot;lineWidth&quot;: null, &quot;lineCap&quot;: null, &quot;lineDash&quot;: null, &quot;lineCompound&quot;: null },
+    { &quot;color&quot;: null, &quot;lineWidth&quot;: null, &quot;lineCap&quot;: null, &quot;lineDash&quot;: null, &quot;lineCompound&quot;: null }
+  ]
+}</code></pre></figure>
+<h2 id="table-合并单元格"><a class="anchor" href="#table-合并单元格" aria-label="定位到 合并单元格">#</a>合并单元格</h2>
+<h3 id="table-水平合并"><a class="anchor" href="#table-水平合并" aria-label="定位到 水平合并">#</a>水平合并</h3>
+<p>水平合并使用 <code>gridSpan</code>。被合并的单元格只保留左上角主单元格，后续被覆盖的逻辑单元格不再单独出现。</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;id&quot;: &quot;cell-1&quot;,
+  &quot;type&quot;: &quot;tableColumn&quot;,
+  &quot;depth&quot;: 3,
+  &quot;extInfo&quot;: {
+    &quot;gridSpan&quot;: 2,
+    &quot;rowSpan&quot;: 1,
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;TableCell&quot;,
+      &quot;anchor&quot;: [100, 80, 200, 40],
+      &quot;columnWidth&quot;: 100,
+      &quot;geometry&quot;: { &quot;name&quot;: &quot;tableColumn&quot;, &quot;data&quot;: null, &quot;avLst&quot;: null, &quot;textBounds&quot;: null },
+      &quot;textVerticalAlignment&quot;: &quot;TOP&quot;,
+      &quot;textInsets&quot;: [3.6, 7.2, 3.6, 7.2]
+    }
+  },
+  &quot;children&quot;: []
+}</code></pre></figure>
+<p>设置效果：</p>
+<ul><li><code>gridSpan: 2</code> 表示该单元格占用两个逻辑列。</li><li><code>anchor.width</code> 应等于被合并列宽之和。</li><li><code>columnWidth</code> 可保留单个基础列宽，便于还原网格。</li></ul>
+<h3 id="table-垂直合并"><a class="anchor" href="#table-垂直合并" aria-label="定位到 垂直合并">#</a>垂直合并</h3>
+<p>垂直合并使用 <code>rowSpan</code>。</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;id&quot;: &quot;cell-vertical&quot;,
+  &quot;type&quot;: &quot;tableColumn&quot;,
+  &quot;depth&quot;: 3,
+  &quot;extInfo&quot;: {
+    &quot;rowSpan&quot;: 2,
+    &quot;gridSpan&quot;: 1,
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;TableCell&quot;,
+      &quot;anchor&quot;: [100, 80, 100, 80],
+      &quot;geometry&quot;: { &quot;name&quot;: &quot;tableColumn&quot;, &quot;data&quot;: null, &quot;avLst&quot;: null, &quot;textBounds&quot;: null }
+    }
+  },
+  &quot;children&quot;: []
+}</code></pre></figure>
+<p>设置效果：</p>
+<ul><li><code>rowSpan: 2</code> 表示该单元格占用两行。</li><li><code>anchor.height</code> 应等于被合并行高之和。</li><li>被覆盖行中不应再创建对应的独立单元格。</li></ul>
+<h2 id="table-单元格文本"><a class="anchor" href="#table-单元格文本" aria-label="定位到 单元格文本">#</a>单元格文本</h2>
+<p>单元格内容使用段落和文本片段：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;id&quot;: &quot;cell-1&quot;,
+  &quot;type&quot;: &quot;tableColumn&quot;,
+  &quot;depth&quot;: 3,
+  &quot;extInfo&quot;: {
+    &quot;rowSpan&quot;: 1,
+    &quot;gridSpan&quot;: 1,
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;TableCell&quot;,
+      &quot;anchor&quot;: [100, 80, 100, 40],
+      &quot;fillStyle&quot;: {
+        &quot;type&quot;: &quot;color&quot;,
+        &quot;color&quot;: { &quot;scheme&quot;: &quot;accent1&quot;, &quot;realColor&quot;: -12028725, &quot;color&quot;: -12028725 }
+      },
+      &quot;geometry&quot;: { &quot;name&quot;: &quot;tableColumn&quot;, &quot;data&quot;: null, &quot;avLst&quot;: null, &quot;textBounds&quot;: null },
+      &quot;textVerticalAlignment&quot;: &quot;MIDDLE&quot;,
+      &quot;textInsets&quot;: [3.6, 7.2, 3.6, 7.2],
+      &quot;columnWidth&quot;: 100
+    }
+  },
+  &quot;children&quot;: [
+    {
+      &quot;id&quot;: &quot;cell-p-1&quot;,
+      &quot;pid&quot;: &quot;cell-1&quot;,
+      &quot;type&quot;: &quot;p&quot;,
+      &quot;depth&quot;: 4,
+      &quot;extInfo&quot;: {
+        &quot;property&quot;: {
+          &quot;textAlign&quot;: &quot;CENTER&quot;,
+          &quot;bulletStyle&quot;: { &quot;buNone&quot;: true },
+          &quot;leftMargin&quot;: 0
+        }
+      },
+      &quot;children&quot;: [
+        {
+          &quot;id&quot;: &quot;cell-r-1&quot;,
+          &quot;pid&quot;: &quot;cell-p-1&quot;,
+          &quot;type&quot;: &quot;r&quot;,
+          &quot;text&quot;: &quot;表头&quot;,
+          &quot;depth&quot;: 5,
+          &quot;extInfo&quot;: {
+            &quot;property&quot;: {
+              &quot;fontSize&quot;: 18,
+              &quot;bold&quot;: true,
+              &quot;fontColor&quot;: {
+                &quot;type&quot;: &quot;color&quot;,
+                &quot;color&quot;: { &quot;realColor&quot;: -1, &quot;color&quot;: -1 }
+              }
+            }
+          },
+          &quot;children&quot;: []
+        }
+      ]
+    }
+  ]
+}</code></pre></figure>
+<h2 id="table-校验规则"><a class="anchor" href="#table-校验规则" aria-label="定位到 校验规则">#</a>校验规则</h2>
+<ul><li><code>table.children.length</code> 应等于 <code>numberOfRows</code>。</li><li>每一行可见单元格跨度之和应等于 <code>numberOfColumns</code>。</li><li><code>rowSpan</code> 和 <code>gridSpan</code> 应为正整数。</li><li>被合并覆盖的网格位置不应重复创建单元格。</li><li>单元格 <code>anchor</code> 应与表格网格对齐。</li><li>单元格文本应使用 <code>p -&gt; r</code>，避免直接把原始文本放在 <code>tableColumn</code> 上。</li></ul>
+                </div>
+              </article>
+<article class="doc-section" id="container" data-section="container">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">protocol/object/container.md</p>
+                    <h2>分组对象</h2>
+                    <p>分组坐标系、嵌套、移动和缩放。</p>
+                  </div>
+                  <a class="source-link" href="source/protocol/object/container.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="container-分组对象"><a class="anchor" href="#container-分组对象" aria-label="定位到 分组对象">#</a>分组对象</h1>
+<p><code>container</code> 表示分组对象。分组用于把多个对象作为一个整体移动、缩放或嵌套。</p>
+<h2 id="container-结构"><a class="anchor" href="#container-结构" aria-label="定位到 结构">#</a>结构</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type ContainerElement = ElementNode &amp; {
+  type: &quot;container&quot;
+  point: Box
+  extInfo: {
+    property: ContainerProperty
+  }
+  children: ElementNode[]
+}</code></pre></figure>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type ContainerProperty = {
+  realType: &quot;Group&quot;
+  anchor: Box
+  interiorAnchor: Box
+  rotation?: number
+  shadow?: Shadow
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>设置方式</th><th>效果</th></tr></thead><tbody><tr><td><code>realType</code></td><td><code>Group</code>。</td><td>标记该对象为分组。</td></tr>
+<tr><td><code>anchor</code></td><td><code>[x, y, width, height]</code>。</td><td>定义分组在父坐标系中的外框。</td></tr>
+<tr><td><code>interiorAnchor</code></td><td><code>[x, y, width, height]</code>。</td><td>定义子对象使用的内层坐标系。</td></tr>
+<tr><td><code>rotation</code></td><td>角度数值。</td><td>同时旋转分组及其所有子对象。</td></tr>
+<tr><td><code>shadow</code></td><td>公共阴影对象。</td><td>渲染器支持分组效果时，为分组边界添加阴影。</td></tr></tbody></table></div>
+<h2 id="container-坐标模型"><a class="anchor" href="#container-坐标模型" aria-label="定位到 坐标模型">#</a>坐标模型</h2>
+<p>分组有两个区域：</p>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>坐标系</th><th>说明</th></tr></thead><tbody><tr><td><code>point</code></td><td>父坐标系</td><td>分组可见外框。</td></tr>
+<tr><td><code>anchor</code></td><td>父坐标系或父级归一化空间</td><td>分组放置区域。</td></tr>
+<tr><td><code>interiorAnchor</code></td><td>分组内部坐标系</td><td>映射子对象坐标时使用的基准区域。</td></tr></tbody></table></div>
+<p>顶层分组通常使用页面坐标：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;point&quot;: [300, 400, 200, 80],
+  &quot;extInfo&quot;: {
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;Group&quot;,
+      &quot;anchor&quot;: [300, 400, 200, 80],
+      &quot;interiorAnchor&quot;: [300, 400, 200, 80]
+    }
+  }
+}</code></pre></figure>
+<p>嵌套分组或导入数据中可能使用归一化坐标。归一化坐标需要结合父分组尺寸换算。</p>
+<h2 id="container-位置"><a class="anchor" href="#container-位置" aria-label="定位到 位置">#</a>位置</h2>
+<p>移动分组时，应同步更新：</p>
+<ul><li><code>point[0]</code> / <code>point[1]</code></li><li><code>property.anchor[0]</code> / <code>property.anchor[1]</code></li></ul>
+<p>如果分组使用绝对坐标，子对象 <code>point</code> 可以保持不变或按同样偏移更新，取决于实现方是否把子对象存储为绝对坐标。推荐策略：</p>
+<div class="table-wrap"><table><thead><tr><th>存储策略</th><th>移动分组</th><th>移动子对象</th></tr></thead><tbody><tr><td>子对象使用绝对坐标</td><td>同时更新分组和子对象坐标。</td><td>是</td></tr>
+<tr><td>子对象使用相对坐标</td><td>只更新分组坐标。</td><td>否</td></tr></tbody></table></div>
+<p>实现方应在写入时保持同一种策略，避免同一分组内混合绝对和相对坐标。</p>
+<h2 id="container-缩放"><a class="anchor" href="#container-缩放" aria-label="定位到 缩放">#</a>缩放</h2>
+<p>缩放分组时，应调整 <code>anchor</code> / <code>point</code> 的宽高，并按比例映射子对象。</p>
+<figure class="code-card"><figcaption>text</figcaption><pre><code>scaleX = newGroupWidth / oldGroupWidth
+scaleY = newGroupHeight / oldGroupHeight
+
+child.x = group.x + (child.x - oldGroup.x) * scaleX
+child.y = group.y + (child.y - oldGroup.y) * scaleY
+child.width = child.width * scaleX
+child.height = child.height * scaleY</code></pre></figure>
+<p>如果子对象使用归一化坐标，缩放只需要更新父分组 <code>anchor</code> / <code>point</code>，子对象归一化坐标保持不变。</p>
+<h2 id="container-嵌套分组"><a class="anchor" href="#container-嵌套分组" aria-label="定位到 嵌套分组">#</a>嵌套分组</h2>
+<p>分组可以嵌套：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;id&quot;: &quot;group-1&quot;,
+  &quot;type&quot;: &quot;container&quot;,
+  &quot;depth&quot;: 1,
+  &quot;point&quot;: [100, 100, 400, 120],
+  &quot;extInfo&quot;: {
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;Group&quot;,
+      &quot;anchor&quot;: [100, 100, 400, 120],
+      &quot;interiorAnchor&quot;: [100, 100, 400, 120]
+    }
+  },
+  &quot;children&quot;: [
+    {
+      &quot;id&quot;: &quot;group-2&quot;,
+      &quot;pid&quot;: &quot;group-1&quot;,
+      &quot;type&quot;: &quot;container&quot;,
+      &quot;depth&quot;: 2,
+      &quot;point&quot;: [120, 110, 180, 80],
+      &quot;extInfo&quot;: {
+        &quot;property&quot;: {
+          &quot;realType&quot;: &quot;Group&quot;,
+          &quot;anchor&quot;: [120, 110, 180, 80],
+          &quot;interiorAnchor&quot;: [120, 110, 180, 80]
+        }
+      },
+      &quot;children&quot;: []
+    }
+  ]
+}</code></pre></figure>
+<p>嵌套分组解析时，应从外到内逐层建立坐标系。</p>
+<h2 id="container-包含文本子对象的分组"><a class="anchor" href="#container-包含文本子对象的分组" aria-label="定位到 包含文本子对象的分组">#</a>包含文本子对象的分组</h2>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;id&quot;: &quot;group-1&quot;,
+  &quot;type&quot;: &quot;container&quot;,
+  &quot;depth&quot;: 1,
+  &quot;point&quot;: [80, 420, 360, 60],
+  &quot;extInfo&quot;: {
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;Group&quot;,
+      &quot;anchor&quot;: [80, 420, 360, 60],
+      &quot;interiorAnchor&quot;: [80, 420, 360, 60]
+    }
+  },
+  &quot;children&quot;: [
+    {
+      &quot;id&quot;: &quot;label-1&quot;,
+      &quot;pid&quot;: &quot;group-1&quot;,
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;depth&quot;: 2,
+      &quot;point&quot;: [80, 420, 170, 60],
+      &quot;extInfo&quot;: {
+        &quot;property&quot;: {
+          &quot;realType&quot;: &quot;Auto&quot;,
+          &quot;shapeType&quot;: &quot;rect&quot;,
+          &quot;anchor&quot;: [80, 420, 170, 60],
+          &quot;fillStyle&quot;: { &quot;type&quot;: &quot;color&quot;, &quot;color&quot;: { &quot;realColor&quot;: -12028725, &quot;color&quot;: -12028725 } },
+          &quot;geometry&quot;: { &quot;name&quot;: &quot;rect&quot;, &quot;data&quot;: null, &quot;avLst&quot;: null, &quot;textBounds&quot;: null },
+          &quot;textVerticalAlignment&quot;: &quot;MIDDLE&quot;,
+          &quot;textInsets&quot;: [3.6, 7.2, 3.6, 7.2]
+        }
+      },
+      &quot;children&quot;: []
+    }
+  ]
+}</code></pre></figure>
+<h2 id="container-限制"><a class="anchor" href="#container-限制" aria-label="定位到 限制">#</a>限制</h2>
+<ul><li>除非分组是临时编辑产物，否则 <code>container.children</code> 不应为空。</li><li><code>anchor.width</code> 和 <code>anchor.height</code> 应大于 <code>0</code>。</li><li>子对象 <code>pid</code> 应指向分组 id。</li><li>移动和缩放分组时，应保持子对象顺序不变。</li><li>如果分组有旋转，子对象命中测试和渲染应先应用分组变换，再应用子对象自身变换。</li></ul>
+                </div>
+              </article>
+<article class="doc-section" id="other-objects" data-section="other-objects">
+                <header class="doc-header">
+                  <div>
+                    <p class="source-path">protocol/object/other-objects.md</p>
+                    <h2>其他对象</h2>
+                    <p>音频、视频和页面媒体动画扩展。</p>
+                  </div>
+                  <a class="source-link" href="source/protocol/object/other-objects.md">源 Markdown</a>
+                </header>
+                <div class="markdown-body">
+                  <h1 id="other-objects-其他对象"><a class="anchor" href="#other-objects-其他对象" aria-label="定位到 其他对象">#</a>其他对象</h1>
+<p>本文档描述当前协议中不需要单独完整章节的对象和扩展形态，包括音频、视频和媒体播放信息。</p>
+<h2 id="other-objects-媒体对象模型"><a class="anchor" href="#other-objects-媒体对象模型" aria-label="定位到 媒体对象模型">#</a>媒体对象模型</h2>
+<p>音频和视频通常不是独立的顶层 <code>type</code>，而是挂载在 <code>image</code> 对象上：</p>
+<ul><li><code>image</code> 对象提供页面上的可见封面、播放按钮或视频首帧。</li><li><code>audio</code> 或 <code>video</code> 字段保存媒体资源。</li><li><code>extContentType</code> 保存媒体 MIME 类型。</li><li><code>hyperlink</code> 使用 <code>ppaction://media</code> 表示点击触发媒体行为。</li><li>页面 <code>extInfo.animationExt</code> 或 <code>extInfo.animation</code> 描述播放动画、音量、循环和播放时长。</li></ul>
+<h2 id="other-objects-音频"><a class="anchor" href="#other-objects-音频" aria-label="定位到 音频">#</a>音频</h2>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type AudioImageProperty = ImageProperty &amp; {
+  audio: string
+  extContentType: string
+  hyperlink: Hyperlink
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>设置方式</th><th>效果</th></tr></thead><tbody><tr><td><code>audio</code></td><td><code>data:audio/...;base64,...</code> 或 URL。</td><td>提供音频二进制内容或资源地址。</td></tr>
+<tr><td><code>extContentType</code></td><td>MIME 类型，例如 <code>audio/mp3</code>。</td><td>告诉消费端如何解码媒体。</td></tr>
+<tr><td><code>hyperlink.address</code></td><td><code>ppaction://media</code>。</td><td>标记点击动作为媒体播放。</td></tr>
+<tr><td><code>hyperlink.action</code></td><td><code>ppaction://media</code>。</td><td>保留 PPTX 动作行为。</td></tr></tbody></table></div>
+<p>示例：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;id&quot;: &quot;audio-cover&quot;,
+  &quot;type&quot;: &quot;image&quot;,
+  &quot;depth&quot;: 1,
+  &quot;point&quot;: [447.5, 237.5, 65, 65],
+  &quot;extInfo&quot;: {
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;Picture&quot;,
+      &quot;shapeType&quot;: &quot;rect&quot;,
+      &quot;anchor&quot;: [447.5, 237.5, 65, 65],
+      &quot;fillStyle&quot;: {
+        &quot;type&quot;: &quot;texture&quot;,
+        &quot;texture&quot;: {
+          &quot;imageData&quot;: &quot;data:image/png;base64,...&quot;,
+          &quot;contentType&quot;: &quot;image/png&quot;,
+          &quot;alpha&quot;: 100000,
+          &quot;flipMode&quot;: &quot;NONE&quot;,
+          &quot;stretch&quot;: [0, 0, 0, 0]
+        }
+      },
+      &quot;hyperlink&quot;: {
+        &quot;type&quot;: &quot;URL&quot;,
+        &quot;label&quot;: &quot;&quot;,
+        &quot;address&quot;: &quot;ppaction://media&quot;,
+        &quot;action&quot;: &quot;ppaction://media&quot;
+      },
+      &quot;geometry&quot;: { &quot;name&quot;: &quot;rect&quot;, &quot;data&quot;: null, &quot;avLst&quot;: null, &quot;textBounds&quot;: null },
+      &quot;image&quot;: &quot;data:image/png;base64,...&quot;,
+      &quot;contentType&quot;: &quot;image/png&quot;,
+      &quot;audio&quot;: &quot;data:audio/mp3;base64,...&quot;,
+      &quot;extContentType&quot;: &quot;audio/mp3&quot;
+    }
+  },
+  &quot;children&quot;: []
+}</code></pre></figure>
+<h2 id="other-objects-视频"><a class="anchor" href="#other-objects-视频" aria-label="定位到 视频">#</a>视频</h2>
+<p>视频使用与音频相同的挂载方式，只是资源字段改为 <code>video</code>。</p>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type VideoImageProperty = ImageProperty &amp; {
+  video: string
+  extContentType: string
+  hyperlink?: Hyperlink
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>设置方式</th><th>效果</th></tr></thead><tbody><tr><td><code>video</code></td><td><code>data:video/...;base64,...</code> 或 URL。</td><td>提供视频二进制内容或资源地址。</td></tr>
+<tr><td><code>extContentType</code></td><td>MIME 类型，例如 <code>video/mp4</code>。</td><td>告诉消费端如何解码媒体。</td></tr>
+<tr><td><code>image</code></td><td>缩略图、封面图或首帧。</td><td>在幻灯片上显示媒体对象。</td></tr>
+<tr><td><code>hyperlink</code></td><td>通常为 <code>ppaction://media</code>。</td><td>点击播放行为。</td></tr></tbody></table></div>
+<p>示例：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;type&quot;: &quot;image&quot;,
+  &quot;point&quot;: [120, 90, 320, 180],
+  &quot;extInfo&quot;: {
+    &quot;property&quot;: {
+      &quot;realType&quot;: &quot;Picture&quot;,
+      &quot;shapeType&quot;: &quot;rect&quot;,
+      &quot;anchor&quot;: [120, 90, 320, 180],
+      &quot;fillStyle&quot;: {
+        &quot;type&quot;: &quot;texture&quot;,
+        &quot;texture&quot;: {
+          &quot;imageData&quot;: &quot;data:image/png;base64,...&quot;,
+          &quot;contentType&quot;: &quot;image/png&quot;,
+          &quot;alpha&quot;: 100000,
+          &quot;flipMode&quot;: &quot;NONE&quot;,
+          &quot;stretch&quot;: [0, 0, 0, 0]
+        }
+      },
+      &quot;geometry&quot;: { &quot;name&quot;: &quot;rect&quot;, &quot;data&quot;: null, &quot;avLst&quot;: null, &quot;textBounds&quot;: null },
+      &quot;image&quot;: &quot;data:image/png;base64,...&quot;,
+      &quot;video&quot;: &quot;data:video/mp4;base64,...&quot;,
+      &quot;extContentType&quot;: &quot;video/mp4&quot;
+    }
+  },
+  &quot;children&quot;: []
+}</code></pre></figure>
+<h2 id="other-objects-页面媒体动画"><a class="anchor" href="#other-objects-页面媒体动画" aria-label="定位到 页面媒体动画">#</a>页面媒体动画</h2>
+<p>页面级 <code>extInfo.animationExt</code> 可描述媒体播放行为。</p>
+<figure class="code-card"><figcaption>ts</figcaption><pre><code>type MediaAnimationExt = {
+  elementId: string
+  presetClass: &quot;mediacall&quot; | string
+  presetId: number
+  presetSubtype: number
+  animation: string
+  text: string | null
+  startType: number
+  attr: {
+    media_vol?: string
+    media_repeatCount?: string
+    cmd?: string
+    audio?: string
+    video?: string
+  }
+  duration?: number
+}</code></pre></figure>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>elementId</code></td><td>目标媒体对象 id。</td></tr>
+<tr><td><code>presetClass</code></td><td>媒体播放通常使用 <code>mediacall</code>。</td></tr>
+<tr><td><code>presetId</code></td><td>动画预设 id。</td></tr>
+<tr><td><code>presetSubtype</code></td><td>动画预设子类型。</td></tr>
+<tr><td><code>animation</code></td><td>便于阅读的动画名称。</td></tr>
+<tr><td><code>text</code></td><td>可选文本说明。</td></tr>
+<tr><td><code>startType</code></td><td>播放触发类型。实现方应保留该值。</td></tr>
+<tr><td><code>attr.media_vol</code></td><td>音量，通常为 <code>50%</code> 这样的百分比字符串。</td></tr>
+<tr><td><code>attr.media_repeatCount</code></td><td>重复次数。</td></tr>
+<tr><td><code>attr.cmd</code></td><td>播放命令，例如 <code>playFrom(0.0)</code>。</td></tr>
+<tr><td><code>attr.audio</code></td><td>目标为音频时为 <code>true</code>。</td></tr>
+<tr><td><code>attr.video</code></td><td>目标为视频时为 <code>true</code>。</td></tr>
+<tr><td><code>duration</code></td><td>媒体播放时长。</td></tr></tbody></table></div>
+<p>示例：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;animationExt&quot;: [
+    {
+      &quot;elementId&quot;: &quot;audio-cover&quot;,
+      &quot;presetClass&quot;: &quot;mediacall&quot;,
+      &quot;presetId&quot;: 1,
+      &quot;presetSubtype&quot;: 0,
+      &quot;animation&quot;: &quot;媒体-播放&quot;,
+      &quot;text&quot;: null,
+      &quot;startType&quot;: 3,
+      &quot;attr&quot;: {
+        &quot;media_vol&quot;: &quot;50%&quot;,
+        &quot;media_repeatCount&quot;: &quot;1000&quot;,
+        &quot;cmd&quot;: &quot;playFrom(0.0)&quot;,
+        &quot;audio&quot;: &quot;true&quot;
+      },
+      &quot;duration&quot;: 3744
+    }
+  ]
+}</code></pre></figure>
+<h2 id="other-objects-切换和原始动画"><a class="anchor" href="#other-objects-切换和原始动画" aria-label="定位到 切换和原始动画">#</a>切换和原始动画</h2>
+<p>页面也可以包含 <code>transition</code> 和 <code>animation</code>：</p>
+<figure class="code-card"><figcaption>json</figcaption><pre><code>{
+  &quot;transition&quot;: {
+    &quot;blinds&quot;: { &quot;dir&quot;: &quot;horz&quot; },
+    &quot;spd&quot;: &quot;slow&quot;
+  },
+  &quot;animation&quot;: {
+    &quot;tnLst&quot;: {}
+  }
+}</code></pre></figure>
+<p>这些字段结构可能较深，第三方实现如果不需要编辑动画，建议完整保留并透传。</p>
+<h2 id="other-objects-兼容性说明"><a class="anchor" href="#other-objects-兼容性说明" aria-label="定位到 兼容性说明">#</a>兼容性说明</h2>
+<ul><li>媒体对象仍然按 <code>image</code> 对象渲染其封面。</li><li>播放能力取决于运行环境是否支持对应 MIME 类型。</li><li>媒体数据 URI 可能非常大，处理时应避免无意义复制。</li><li>如果无法播放媒体，也应保留 <code>audio</code>、<code>video</code>、<code>extContentType</code>、<code>hyperlink</code> 和页面动画字段，以便回写时不丢失信息。</li></ul>
+                </div>
+              </article>
+        </div>
+      </main>
+
+      <aside class="outline" aria-label="章节大纲">
+        <h1>章节大纲</h1>
+        <section class="outline-group" data-outline-group="overview">
+        <h2>项目概览</h2>
+        <a class="outline-link level-2" href="#overview-仓库结构">仓库结构</a><a class="outline-link level-2" href="#overview-使用方式">使用方式</a><a class="outline-link level-2" href="#overview-兼容性说明">兼容性说明</a><a class="outline-link level-2" href="#overview-当前状态">当前状态</a>
+      </section>
+<section class="outline-group" data-outline-group="protocol">
+        <h2>协议入口</h2>
+        <a class="outline-link level-2" href="#protocol-阅读顺序">阅读顺序</a><a class="outline-link level-2" href="#protocol-结构概览">结构概览</a><a class="outline-link level-2" href="#protocol-数据合成">数据合成</a>
+      </section>
+<section class="outline-group" data-outline-group="core">
+        <h2>核心协议</h2>
+        <a class="outline-link level-2" href="#core-顶层结构">顶层结构</a><a class="outline-link level-2" href="#core-索引关系">索引关系</a><a class="outline-link level-2" href="#core-坐标约定">坐标约定</a><a class="outline-link level-2" href="#core-通用节点约定">通用节点约定</a><a class="outline-link level-2" href="#core-背景">背景</a><a class="outline-link level-2" href="#core-颜色">颜色</a><a class="outline-link level-2" href="#core-填充样式">填充样式</a><a class="outline-link level-3" href="#core-渐变填充">渐变填充</a><a class="outline-link level-3" href="#core-纹理填充">纹理填充</a><a class="outline-link level-2" href="#core-边框样式">边框样式</a><a class="outline-link level-2" href="#core-几何">几何</a><a class="outline-link level-2" href="#core-占位符">占位符</a><a class="outline-link level-2" href="#core-兼容性要求">兼容性要求</a>
+      </section>
+<section class="outline-group" data-outline-group="slide-master">
+        <h2>幻灯片母版协议</h2>
+        <a class="outline-link level-2" href="#slide-master-母版结构">母版结构</a><a class="outline-link level-2" href="#slide-master-颜色映射">颜色映射</a><a class="outline-link level-2" href="#slide-master-主题">主题</a><a class="outline-link level-2" href="#slide-master-版式结构">版式结构</a><a class="outline-link level-2" href="#slide-master-版式类型">版式类型</a><a class="outline-link level-2" href="#slide-master-母版和版式对象">母版和版式对象</a><a class="outline-link level-2" href="#slide-master-占位符解析">占位符解析</a>
+      </section>
+<section class="outline-group" data-outline-group="page">
+        <h2>页面协议</h2>
+        <a class="outline-link level-2" href="#page-页面结构">页面结构</a><a class="outline-link level-2" href="#page-页面扩展信息">页面扩展信息</a><a class="outline-link level-2" href="#page-页面解析">页面解析</a><a class="outline-link level-2" href="#page-背景优先级">背景优先级</a><a class="outline-link level-2" href="#page-页面对象">页面对象</a><a class="outline-link level-2" href="#page-校验清单">校验清单</a>
+      </section>
+<section class="outline-group" data-outline-group="object">
+        <h2>对象协议</h2>
+        <a class="outline-link level-2" href="#object-文档入口">文档入口</a><a class="outline-link level-2" href="#object-对象节点">对象节点</a><a class="outline-link level-2" href="#object-树结构规则">树结构规则</a><a class="outline-link level-2" href="#object-解析规则">解析规则</a><a class="outline-link level-2" href="#object-对象类别">对象类别</a><a class="outline-link level-2" href="#object-公共属性概览">公共属性概览</a>
+      </section>
+<section class="outline-group" data-outline-group="common-property">
+        <h2>对象公共属性</h2>
+        <a class="outline-link level-2" href="#common-property-属性位置">属性位置</a><a class="outline-link level-2" href="#common-property-realtype">`realType`</a><a class="outline-link level-2" href="#common-property-anchor">`anchor`</a><a class="outline-link level-3" href="#common-property-设置位置和尺寸">设置位置和尺寸</a><a class="outline-link level-2" href="#common-property-rotation">`rotation`</a><a class="outline-link level-2" href="#common-property-shapetype">`shapeType`</a><a class="outline-link level-2" href="#common-property-geometry">`geometry`</a><a class="outline-link level-2" href="#common-property-placeholder">`placeholder`</a><a class="outline-link level-2" href="#common-property-fillstyle">`fillStyle`</a><a class="outline-link level-3" href="#common-property-无填充">无填充</a><a class="outline-link level-3" href="#common-property-纯色填充">纯色填充</a><a class="outline-link level-3" href="#common-property-渐变填充">渐变填充</a><a class="outline-link level-3" href="#common-property-纹理填充">纹理填充</a><a class="outline-link level-2" href="#common-property-strokestyle">`strokeStyle`</a><a class="outline-link level-2" href="#common-property-shadow">`shadow`</a><a class="outline-link level-2" href="#common-property-effectlst">`effectLst`</a><a class="outline-link level-2" href="#common-property-hyperlink">`hyperlink`</a>
+      </section>
+<section class="outline-group" data-outline-group="text">
+        <h2>文本对象</h2>
+        <a class="outline-link level-2" href="#text-text">`text`</a><a class="outline-link level-3" href="#text-文本自适应">文本自适应</a><a class="outline-link level-3" href="#text-自动换行和内边距">自动换行和内边距</a><a class="outline-link level-2" href="#text-p">`p`</a><a class="outline-link level-3" href="#text-项目符号样式">项目符号样式</a><a class="outline-link level-2" href="#text-r">`r`</a><a class="outline-link level-2" href="#text-富文本组合">富文本组合</a><a class="outline-link level-2" href="#text-多段文本">多段文本</a><a class="outline-link level-2" href="#text-空段落">空段落</a>
+      </section>
+<section class="outline-group" data-outline-group="image">
+        <h2>图片对象</h2>
+        <a class="outline-link level-2" href="#image-结构">结构</a><a class="outline-link level-2" href="#image-基础图片">基础图片</a><a class="outline-link level-2" href="#image-图片资源字段">图片资源字段</a><a class="outline-link level-2" href="#image-不透明度">不透明度</a><a class="outline-link level-2" href="#image-裁剪">裁剪</a><a class="outline-link level-2" href="#image-拉伸-裁剪和平铺">拉伸、裁剪和平铺</a><a class="outline-link level-2" href="#image-图片作为媒体封面">图片作为媒体封面</a>
+      </section>
+<section class="outline-group" data-outline-group="table">
+        <h2>表格对象</h2>
+        <a class="outline-link level-2" href="#table-table">`table`</a><a class="outline-link level-2" href="#table-tablerow">`tableRow`</a><a class="outline-link level-2" href="#table-tablecolumn">`tableColumn`</a><a class="outline-link level-2" href="#table-边框">边框</a><a class="outline-link level-2" href="#table-合并单元格">合并单元格</a><a class="outline-link level-3" href="#table-水平合并">水平合并</a><a class="outline-link level-3" href="#table-垂直合并">垂直合并</a><a class="outline-link level-2" href="#table-单元格文本">单元格文本</a><a class="outline-link level-2" href="#table-校验规则">校验规则</a>
+      </section>
+<section class="outline-group" data-outline-group="container">
+        <h2>分组对象</h2>
+        <a class="outline-link level-2" href="#container-结构">结构</a><a class="outline-link level-2" href="#container-坐标模型">坐标模型</a><a class="outline-link level-2" href="#container-位置">位置</a><a class="outline-link level-2" href="#container-缩放">缩放</a><a class="outline-link level-2" href="#container-嵌套分组">嵌套分组</a><a class="outline-link level-2" href="#container-包含文本子对象的分组">包含文本子对象的分组</a><a class="outline-link level-2" href="#container-限制">限制</a>
+      </section>
+<section class="outline-group" data-outline-group="other-objects">
+        <h2>其他对象</h2>
+        <a class="outline-link level-2" href="#other-objects-媒体对象模型">媒体对象模型</a><a class="outline-link level-2" href="#other-objects-音频">音频</a><a class="outline-link level-2" href="#other-objects-视频">视频</a><a class="outline-link level-2" href="#other-objects-页面媒体动画">页面媒体动画</a><a class="outline-link level-2" href="#other-objects-切换和原始动画">切换和原始动画</a><a class="outline-link level-2" href="#other-objects-兼容性说明">兼容性说明</a>
+      </section>
+      </aside>
+    </div>
+    <button class="menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">目录</button>
+    <script id="search-data" type="application/json">[{"title":"项目概览","slug":"overview","source":"README.md","description":"项目用途、阅读方式和兼容性说明。","text":"docmee-pptxProperty 结构协议 docmee-pptxProperty-structural-protocol 用于维护 Docmee pptxProperty JSON 结构协议，帮助第三方开发者理解、读取、生成和校验 PPTX 结构数据。 pptxProperty 描述一个演示文稿的页面尺寸、页面内容、幻灯片母版、版式、主题、背景和页面对象。它不是 PPTX 文件本身，而是 Docmee 系统在编辑、解析和生成 PPTX 时使用的结构化数据格式。 仓库结构 路径 用途 --- --- README.md README.md 项目用途、目录说明和阅读方式。 protocol/README.md protocol/README.md 协议文档入口和阅读顺序。 protocol/core.md protocol/core.md 顶层结构、索引关系、坐标约定和通用类型。 protocol/slideMaster.md protocol/slideMaster.md slideMasters 、 slideLayouts 、主题和母版结构。 protocol/page.md protocol/page.md pages 、页面扩展信息和页面内容组织方式。 protocol/object/README.md protocol/object/README.md 页面对象协议入口。 protocol/object/common-property.md protocol/object/common-property.md 对象公共属性，例如位置、填充、阴影、超链接。 protocol/object/text.md protocol/object/text.md 文本对象、段落、文本片段和富文本组合。 protocol/object/image.md protocol/object/image.md 图片对象、图片资源、裁剪和透明度。 protocol/object/table.md protocol/object/table.md 表格、行、单元格、合并单元格。 protocol/object/container.md protocol/object/container.md 分组对象、位置、缩放和嵌套。 protocol/object/other-objects.md protocol/object/other-objects.md 音频、视频和媒体播放扩展。 使用方式 建议按以下顺序阅读协议： 1. 阅读 protocol/core.md protocol/core.md ，理解顶层字段、坐标、颜色、填充、边框等通用结构。 2. 阅读 protocol/slideMaster.md protocol/slideMaster.md ，理解母版、版式、主题与占位符的组织方式。 3. 阅读 protocol/page.md protocol/page.md ，理解页面如何引用母版和版式，以及页面内容如何挂载。 4. 阅读 protocol/object/README.md protocol/object/README.md ，理解对象树和各对象类型的文档入口。 5. 对照 example/example.json example/example.json ，验证实际 JSON 与协议字段的对应关系。 开发集成时，推荐的处理流程是： 1. 读取顶层 width 、 height ，建立页面画布。 2. 遍历 pages ，读取每个页面的 extInfo.slideMasterIdx 和 extInfo.slideLayoutIdx 。 3. 根据索引解析对应的 slideMasters 和 slideMasters .slideLayouts 。 4. 合成母版、版式、页面三层背景和占位符信息。 5. 遍历 pages .children ，按 object 协议解析并渲染对象树。 兼容性说明 - 协议字段名区分大小写，第三方实现应保持原始字段名。 - 未识别字段建议保留透传，避免破坏向前兼容。 - 读取对象时应优先判断 type ，再解析对应的 extInfo.property 。 - slideMasterIdx 和 slideLayoutIdx 是数组下标引用，处理过程中不应重新排序相关数组。 - 颜色、透明度、坐标等数值单位请以协议文档为准，不建议自行转换含义。 当前状态 本仓库目前提供结构协议文档和一份参考 JSON。后续可以继续补充 JSON Schema、最小对象样例和自动校验脚本。","headings":[{"id":"overview-docmee-pptxproperty-结构协议","text":"docmee-pptxProperty 结构协议","level":1},{"id":"overview-仓库结构","text":"仓库结构","level":2},{"id":"overview-使用方式","text":"使用方式","level":2},{"id":"overview-兼容性说明","text":"兼容性说明","level":2},{"id":"overview-当前状态","text":"当前状态","level":2}]},{"title":"协议入口","slug":"protocol","source":"protocol/README.md","description":"pptxProperty 的整体结构和推荐阅读顺序。","text":"pptxProperty 协议 本目录存放 pptxProperty 的完整结构协议说明。协议面向需要读取、生成或转换 Docmee PPTX 结构数据的开发者。 阅读顺序 文档 主题 --- --- core.md core.md 顶层数据结构、通用类型、坐标、颜色、填充、边框。 slideMaster.md slideMaster.md 幻灯片母版、版式、主题、颜色映射、母版占位符。 page.md page.md 页面结构、页面扩展信息、页面与母版/版式的索引关系。 object/README.md object/README.md 页面对象树、文本、图片、表格、分组以及每类对象的属性。 结构概览 pages 保存实际页面。 slideMasters 保存母版。每个 slideMaster 内部的 slideLayouts 保存版式。页面通过 slideMasterIdx 和 slideLayoutIdx 引用对应的母版和版式。 数据合成 渲染或生成页面时，推荐按以下层级合成数据： 1. 读取 slideMasters slideMasterIdx ，获得主题、母版背景和母版占位符。 2. 读取 slideMasters slideMasterIdx .slideLayouts slideLayoutIdx ，获得版式背景和版式占位符。 3. 读取 pages .extInfo.background ，获得页面级背景。 4. 读取 pages .children ，获得页面实际对象。 页面内容对象遵循统一的树结构，详见 object/README.md object/README.md 。","headings":[{"id":"protocol-pptxproperty-协议","text":"pptxProperty 协议","level":1},{"id":"protocol-阅读顺序","text":"阅读顺序","level":2},{"id":"protocol-结构概览","text":"结构概览","level":2},{"id":"protocol-数据合成","text":"数据合成","level":2}]},{"title":"核心协议","slug":"core","source":"protocol/core.md","description":"顶层结构、通用类型、坐标、颜色、填充和边框。","text":"核心协议 core 描述 pptxProperty 的顶层结构、全局约定和跨模块复用的通用类型。 顶层结构 字段 类型 是否必填 说明 --- --- --- --- version string 是 协议版本。 width number 是 页面画布宽度。 height number 是 页面画布高度。 font FontResource 是 全局字体资源列表。没有字体资源时使用空数组。 pages Page 是 实际页面数组。 slideMasters SlideMaster 是 幻灯片母版数组。每个母版可以包含多个 slideLayouts 。 索引关系 页面通过下标引用母版和版式： 实现方应保持 slideMasters 和 slideLayouts 的顺序稳定。若需要过滤、排序或重建数组，应同步更新所有页面上的 slideMasterIdx 与 slideLayoutIdx 。 坐标约定 字段 格式 说明 --- --- --- point Box 对象在页面坐标系中的外框。 anchor Box 属性内的几何锚点。顶层对象通常与 point 一致。 interiorAnchor Box 分组内部坐标系区域。 textInsets top, right, bottom, left 文本内边距。 页面坐标原点位于左上角， x 向右增加， y 向下增加。 width 和 height 使用与顶层画布一致的单位。 分组对象内部可以出现相对坐标或归一化坐标。渲染分组对象时，应先建立分组坐标系，再解析其子对象位置。 通用节点约定 所有对象节点都使用 children 表达树形关系。没有子节点时， children 使用空数组。 字段 类型 说明 --- --- --- id string 节点唯一标识。 pid string 父节点 id。顶层页面对象可以没有该字段。 type string 节点类型。 depth number 节点深度。页面直接子对象通常为 1 。 point Box 对象外框。结构性节点可以没有该字段。 noDraw boolean 为 true 时表示该节点不直接绘制，常用于母版或版式占位符。 text string 文本内容。主要用于段落节点和文本片段节点。 extInfo object 扩展信息。对象样式和行为主要位于 extInfo.property 。 children ElementNode 子节点数组。 背景 字段 类型 说明 --- --- --- realType \"Background\" 标识背景属性。 anchor Box 背景覆盖区域，通常覆盖完整画布。 fillStyle FillStyle 背景填充。 strokeStyle StrokeStyle 背景边框。没有边框时可为空对象。 颜色 字段 类型 说明 --- --- --- scheme string 主题色引用，例如 accent1 、 tx1 、 bg1 。 realColor number 计算后的实际颜色值。 color number 原始颜色值或主题基础颜色值。 lumMod number 亮度乘数。 lumOff number 亮度偏移。 shade number 阴影或变暗比例。 tint number 着色或变亮比例。 颜色使用 32 位有符号整数表示。协议中的 realColor 和 color 存储的是 ARGB 整数，即高 8 位为透明通道，后 24 位依次为红、绿、蓝通道。常见不透明颜色可以理解为 0xFFRRGGBB 转成有符号十进制后的结果。 换算步骤如下： 1. 从输入颜色得到 R 、 G 、 B ，每个通道范围为 0..255 。 2. 从输入透明度得到 A ，范围也是 0..255 。没有透明度时使用 255 。 3. 组合无符号整数： argb = A \u003c\u003c 24 R \u003c\u003c 16 G \u003c\u003c 8 B 。 4. 如果 argb \u003e= 2147483648 ，写入协议时使用 argb - 4294967296 ；否则直接写入 argb 。 从十六进制颜色转换时： - RRGGBB ： A = 255 ，再按 0xFFRRGGBB 组合。 - RGB ：先展开为 RRGGBB ，例如 0AF 等同于 00AAFF 。 - RRGGBBAA ：若来源明确使用 CSS 八位十六进制格式，则最后两位是透明通道，需要转换成协议使用的 AARRGGBB 再写入十进制值。 - 不建议混用未标明来源的八位十六进制颜色，因为有些系统使用 AARRGGBB ，有些系统使用 RRGGBBAA 。 从 rgba r,g,b,a 转换时： - r 、 g 、 b 直接作为 R 、 G 、 B 。 - CSS 中的 a 通常为 0..1 ，换算为 A = round a 255 。 - 协议中的独立 alpha 字段使用 0..100000 ，可写为 round a 100000 ； 100000 表示完全不透明， 0 表示完全透明。 常见示例： 输入 ARGB 十六进制 协议十进制 --- --- --- FFFFFF 0xFFFFFFFF -1 000000 0xFF000000 -16777216 4874CB 0xFF4874CB -12028725 rgba 0,0,0,0.17 0x2B000000 721420288 实现方可以按自身语言的颜色工具转换为 RGB 或 ARGB，但应保留原始数值以便回写。 填充样式 type 说明 --- --- noFill 无填充。 color 纯色填充。 gradient 渐变填充。 texture 图片或纹理填充。 渐变填充 字段 类型 说明 --- --- --- angle number 渐变角度。 colors ColorValue 渐变色标。 fractions number 色标位置，顺序与 colors 对应。 gradientType string 渐变类型，例如 linear 。 insets number null 渐变区域内缩。 flip string null 翻转模式。 tileRect number null 平铺区域。 rotWithShape boolean null 是否随形状旋转。 纹理填充 字段 类型 说明 --- --- --- imageData string 图片资源，可以是 URL 或 data:image/...;base64,... 。 contentType string MIME 类型，例如 image/png 、 image/jpeg 。 alpha number 纹理透明度。 100000 表示完全不透明。 flipMode string 翻转模式。 stretch number 拉伸或裁切参数。 insets number 图片裁切内缩参数。 offset number, number 纹理偏移。 scale number, number 纹理缩放。 alignment string 对齐方式。 alphaModFix number 透明度修正值。 rotWithShape boolean 是否随形状旋转。 边框样式 字段 类型 说明 --- --- --- paint FillStyle 线条填充。 lineWidth number 线宽。 lineCap string 线端样式。 lineJoin string 连接样式。 lineDash string 虚线样式。 lineCompound string 复合线样式。 几何 字段 类型 说明 --- --- --- name string 几何类型名称，例如 rect 、 tableColumn 。 data unknown null 自定义几何数据。 avLst unknown null 可调参数列表。 textBounds unknown null 文本边界信息。 占位符 字段 类型 说明 --- --- --- type string 占位符类型，例如 TITLE 、 BODY 、 CENTERED_TITLE 、 SUBTITLE 、 CONTENT 、 PICTURE 、 DATETIME 、 FOOTER 、 SLIDE_NUMBER 。 idx number 占位符索引。 size string 占位符尺寸级别，例如 half 、 quarter 。 visible boolean 占位符是否可见。 兼容性要求 - 字段名必须按协议原样读取和写入。 - 未识别字段应保留透传。 - 数组顺序具有语义，尤其是 pages 、 slideMasters 、 slideLayouts 和对象 children 。 - 对象渲染应优先基于 type 分派，再解析对应的 extInfo.property 。 - null 与字段缺失应区别处理。 null 通常表示该结构被显式保留但当前没有值。","headings":[{"id":"core-核心协议","text":"核心协议","level":1},{"id":"core-顶层结构","text":"顶层结构","level":2},{"id":"core-索引关系","text":"索引关系","level":2},{"id":"core-坐标约定","text":"坐标约定","level":2},{"id":"core-通用节点约定","text":"通用节点约定","level":2},{"id":"core-背景","text":"背景","level":2},{"id":"core-颜色","text":"颜色","level":2},{"id":"core-填充样式","text":"填充样式","level":2},{"id":"core-渐变填充","text":"渐变填充","level":3},{"id":"core-纹理填充","text":"纹理填充","level":3},{"id":"core-边框样式","text":"边框样式","level":2},{"id":"core-几何","text":"几何","level":2},{"id":"core-占位符","text":"占位符","level":2},{"id":"core-兼容性要求","text":"兼容性要求","level":2}]},{"title":"幻灯片母版协议","slug":"slide-master","source":"protocol/slideMaster.md","description":"母版、版式、主题、颜色映射和占位符。","text":"幻灯片母版协议 slideMaster 描述幻灯片母版、版式、主题、颜色映射和母版占位对象。页面通过索引引用母版和版式。 母版结构 字段 类型 是否必填 说明 --- --- --- --- background Background 是 母版默认背景。 clrMap ColorMap 是 主题颜色映射。 theme Theme 是 主题名称、主题颜色和字体映射。 children ElementNode 是 母版级占位对象。 slideLayouts SlideLayout 是 母版下的版式集合。 animation unknown null 是 母版动画信息。没有动画时为 null 。 transition unknown null 是 母版切换信息。没有切换时为 null 。 颜色映射 clrMap 用于把文档语义色映射到主题色槽位。例如： 键 说明 --- --- tx1 主文本色映射。 tx2 次文本色映射。 bg1 主背景色映射。 bg2 次背景色映射。 主题 字段 类型 说明 --- --- --- name string 主题名称。 colors Record\u003cstring, number\u003e 主题色表。常见键包括 accent1 到 accent6 、 lt1 、 lt2 、 dk1 、 dk2 、 tx1 、 tx2 、 bg1 、 bg2 、 hlink 、 folHlink 。 majorFontMap FontMap 主字体映射，通常用于标题。 minorFontMap FontMap 次字体映射，通常用于正文。 字体映射字段 说明 --- --- latin 西文字体。 ea 东亚字体。 cs 复杂文字字体。 版式结构 字段 类型 是否必填 说明 --- --- --- --- type string 是 版式类型。 name string 是 版式名称。 noMaster boolean null 是 是否不继承母版。为 null 时按默认继承规则处理。 clrMap ColorMap null 是 版式级颜色映射。为 null 时使用母版颜色映射。 background Background 是 版式背景。 children ElementNode 是 版式占位对象。 animation unknown null 是 版式动画信息。没有动画时为 null 。 transition unknown null 是 版式切换信息。没有切换时为 null 。 版式类型 常见 slideLayout.type 包括： 类型 说明 --- --- TITLE 标题页。 TITLE_AND_CONTENT 标题和内容。 SECTION_HEADER 章节标题页。 TWO_OBJ 双内容区。 TWO_TX_TWO_OBJ 对比版式。 TITLE_ONLY 仅标题。 BLANK 空白页。 VERT_TITLE_AND_TX 竖排标题与文本。 CUST 自定义版式。 母版和版式对象 slideMasters .children 和 slideMasters .slideLayouts .children 使用与页面对象相同的 ElementNode 结构。它们通常用于表示占位符、页脚、日期、页码和默认文本样式。 占位对象通常具有以下特征： - type 多为 text 。 - noDraw 可以为 true ，表示该节点作为模板或占位定义存在。 - extInfo.property.placeholder 描述占位符语义。 - 文本样式可通过 p 和 r 子节点提供默认段落样式和字符样式。 占位符解析 页面生成或渲染时，可以按以下顺序处理占位符： 1. 读取母版 children ，建立全局占位符集合。 2. 读取版式 children ，覆盖或补充母版占位符集合。 3. 读取页面 children ，用真实页面对象替换对应占位符。 4. 对没有被页面对象替换的占位符，根据 visible 和 noDraw 决定是否渲染。 占位符匹配时可结合 placeholder.type 、 placeholder.idx 和对象层级判断。","headings":[{"id":"slide-master-幻灯片母版协议","text":"幻灯片母版协议","level":1},{"id":"slide-master-母版结构","text":"母版结构","level":2},{"id":"slide-master-颜色映射","text":"颜色映射","level":2},{"id":"slide-master-主题","text":"主题","level":2},{"id":"slide-master-版式结构","text":"版式结构","level":2},{"id":"slide-master-版式类型","text":"版式类型","level":2},{"id":"slide-master-母版和版式对象","text":"母版和版式对象","level":2},{"id":"slide-master-占位符解析","text":"占位符解析","level":2}]},{"title":"页面协议","slug":"page","source":"protocol/page.md","description":"页面结构、页面扩展信息和对象挂载方式。","text":"页面协议 page 描述实际幻灯片页面。页面负责引用母版与版式，并承载当前页的真实对象树。 页面结构 字段 类型 是否必填 说明 --- --- --- --- page number 是 页码。推荐使用从 1 开始的正整数。 extInfo PageExtInfo 是 页面扩展信息。 children ElementNode 是 当前页的真实对象数组。 页面扩展信息 字段 类型 是否必填 说明 --- --- --- --- slideMasterIdx number 是 引用 slideMasters 的数组下标。 slideLayoutIdx number 是 引用当前母版下 slideLayouts 的数组下标。 background Background 是 页面级背景。 页面解析 处理页面时，应按以下顺序解析： 1. 读取顶层 width 和 height ，建立页面画布。 2. 根据 extInfo.slideMasterIdx 读取对应 slideMaster 。 3. 根据 extInfo.slideLayoutIdx 读取该母版下的 slideLayout 。 4. 合成母版背景、版式背景和页面背景。 5. 合成母版占位符、版式占位符和页面真实对象。 6. 遍历 children 渲染页面对象树。 背景优先级 背景可出现在三个层级： 层级 字段 优先级 --- --- --- 母版 slideMasters .background 最低 版式 slideMasters .slideLayouts .background 中等 页面 pages .extInfo.background 最高 当多个层级都提供背景时，页面级背景优先。实现方也可以根据业务需要保留全部层级信息，用于编辑器展示或回写。 页面对象 pages .children 是页面实际对象列表。每个对象都遵循 object/README.md object/README.md 中的 ElementNode 结构。 页面对象可以包含： 类型 说明 --- --- text 文本框、占位文本、形状文本。 image 图片对象。 table 表格对象。 container 分组对象。 对象的绘制顺序通常与 children 数组顺序相关。实现方若需要调整层级，应明确维护对象顺序或引入额外层级字段。 校验清单 处理页面前建议验证： - slideMasterIdx 指向存在的 slideMasters 元素。 - slideLayoutIdx 指向对应母版下存在的 slideLayouts 元素。 - background.anchor 与画布尺寸匹配或能被目标渲染器正确处理。 - children 是数组。 - children 中每个对象都有 id 、 type 、 depth 、 extInfo 和 children 。","headings":[{"id":"page-页面协议","text":"页面协议","level":1},{"id":"page-页面结构","text":"页面结构","level":2},{"id":"page-页面扩展信息","text":"页面扩展信息","level":2},{"id":"page-页面解析","text":"页面解析","level":2},{"id":"page-背景优先级","text":"背景优先级","level":2},{"id":"page-页面对象","text":"页面对象","level":2},{"id":"page-校验清单","text":"校验清单","level":2}]},{"title":"对象协议","slug":"object","source":"protocol/object/README.md","description":"页面对象树、对象类型和解析规则。","text":"对象协议 object 描述 pptxProperty 中的页面对象树。页面、母版、版式里的可视内容都使用同一套节点结构，并通过 type 区分对象类型。 文档入口 文档 主题 --- --- common-property.md common-property.md 对象公共属性：位置、尺寸、旋转、填充、边框、阴影、占位符、超链接。 text.md text.md 文本对象、段落 p 、文本片段 r 、富文本组合方式。 image.md image.md 图片对象、图片资源、透明度、裁剪、图片填充。 table.md table.md 表格、行、单元格、合并单元格、边框和单元格文本。 container.md container.md 分组对象、坐标系、位置、缩放和子对象组合。 other-objects.md other-objects.md 音频、视频等媒体类对象和轻量对象说明。 对象节点 字段 类型 说明 --- --- --- id string 对象唯一标识。应在同一文档内保持唯一。 pid string 父对象 id。页面顶层对象通常不设置。 type ElementType 对象类型。解析时先根据该字段分派到对应协议。 depth number 节点深度。页面直接子对象通常为 1 ，子节点逐级递增。 point Box 对象在父坐标系中的外框。文本段落、文本片段、表格行等结构节点可以没有该字段。 noDraw boolean 为 true 时表示该对象作为模板或占位定义存在，不应直接作为页面实物绘制。 text string 文本内容。主要用于 p 空段落和 r 文本片段。 extInfo ElementExtInfo 对象扩展信息。样式、资源和行为通常在 extInfo.property 。 children ElementNode 子对象数组。叶子节点使用空数组。 树结构规则 解析规则 1. 读取 type ，选择对应对象协议。 2. 读取 point ，建立对象外框。没有 point 的结构节点继承父对象布局上下文。 3. 读取 extInfo.property ，解析该对象的真实类型、几何、样式、资源和行为。 4. 递归处理 children 。 5. 未识别字段应保留透传，避免破坏向前兼容。 对象类别 类别 类型 说明 --- --- --- 文本 text , p , r 文本框、段落、富文本片段。 图片 image 图片，也可作为音频或视频的封面对象。 表格 table , tableRow , tableColumn 表格、行、单元格。 分组 container 分组和嵌套分组。 媒体 image 上的 audio 、 video 字段 媒体资源通常挂载在图片对象的 property 上。 公共属性概览 常见对象属性可分为： 分组 属性 --- --- 几何 realType , anchor , shapeType , geometry , rotation 布局 point , anchor , interiorAnchor , textInsets 外观 fillStyle , strokeStyle , shadow , effectLst , imageAlpha , fillAlpha 占位 placeholder , noDraw 交互 hyperlink 、媒体动画字段 公共属性的详细说明见 common-property.md common-property.md 。","headings":[{"id":"object-对象协议","text":"对象协议","level":1},{"id":"object-文档入口","text":"文档入口","level":2},{"id":"object-对象节点","text":"对象节点","level":2},{"id":"object-树结构规则","text":"树结构规则","level":2},{"id":"object-解析规则","text":"解析规则","level":2},{"id":"object-对象类别","text":"对象类别","level":2},{"id":"object-公共属性概览","text":"公共属性概览","level":2}]},{"title":"对象公共属性","slug":"common-property","source":"protocol/object/common-property.md","description":"对象共享的几何、填充、边框、阴影和交互属性。","text":"对象公共属性 本文档描述多个对象类型共享的 extInfo.property 字段。具体对象文档只说明对象专有字段；遇到公共字段时应以本文为准。 属性位置 对象样式通常位于： 例如： realType 值 适用对象 说明 --- --- --- Auto text 自动形状文本或占位符文本。 TextBox text 显式文本框。 Picture image 图片对象。音频/视频封面也可以使用该类型。 table table 表格对象。 TableCell tableColumn 表格单元格。 Group container 分组对象。 Background 背景 背景。 type 决定节点协议， realType 决定该节点在 PPTX 语义中的真实形态。实现方不应只依赖 realType 判断对象类型，因为文本、形状、占位符都可能使用相近的真实类型。 anchor anchor 描述对象的几何区域。它与节点级 point 都是 x, y, width, height ，但用途不同： 字段 作用 --- --- point 对象在当前坐标系中的外框，主要用于布局和快速定位。 property.anchor 对象真实几何锚点，生成 PPTX 或精确渲染时应使用该字段。 顶层对象的 point 和 anchor 通常一致。分组内部对象的 anchor 可以是相对坐标或归一化坐标，需要结合父分组的 interiorAnchor 转换。 设置位置和尺寸 - x 、 y 决定对象左上角。 - width 、 height 决定对象尺寸。 - 宽高应大于 0 。宽高为 0 时对象不可见或无法被正确选择。 - 负坐标可以表示对象部分位于页面外，但第三方渲染器应明确是否支持。 rotation rotation 表示对象绕自身中心旋转的角度，单位为度。正值通常表示顺时针旋转。 设置效果： 值 效果 --- --- 0 或缺失 不旋转。 45 顺时针旋转 45 度。 90 旋转为竖向。 -30 逆时针旋转 30 度。 建议将角度规范化到 -360..360 或 0..360 ，避免不同渲染器对大角度值处理不一致。 shapeType shapeType 描述对象外框形状。当前常用值为 rect 。当对象需要以圆角矩形、椭圆或其他形状裁剪时，可扩展为对应形状名称。 shapeType 应与 geometry.name 保持一致。若两者冲突，建议以 geometry.name 作为精确几何，以 shapeType 作为快速分类。 geometry 字段 说明 --- --- name 几何类型，例如 rect 、 tableColumn 。 data 自定义路径或几何数据。没有自定义几何时为 null 。 avLst 形状调节点列表。没有调节点时为 null 。 textBounds 文本边界信息。没有额外文本边界时为 null 。 geometry 决定对象实际轮廓。对于图片对象，几何会影响图片裁剪范围；对于文本对象，几何会影响背景填充、边框和文本排版区域。 placeholder 字段 说明 --- --- type 占位符语义，例如 TITLE 、 BODY 、 CENTERED_TITLE 、 SUBTITLE 、 CONTENT 、 PICTURE 、 DATETIME 、 FOOTER 、 SLIDE_NUMBER 。 idx 占位符索引。同一版式内多个相同类型占位符用它区分。 size 占位符尺寸级别，例如 half 、 quarter 。 visible 占位符是否可见。 设置方式： 使用限制： - placeholder 主要用于母版、版式和页面中的占位文本或占位内容对象。 - idx 应在同一版式范围内稳定，便于页面对象与占位符匹配。 - visible: false 表示占位符默认不作为实物内容展示；编辑器仍可使用它提供插入位置和默认样式。 fillStyle fillStyle 控制对象内部填充。文本框、形状、表格单元格、背景和图片都可以使用填充。图片对象通常使用 texture 填充。 无填充 效果：对象内部透明，只显示文本、边框或子内容。适用于无背景文本框。 限制： - noFill 不应同时带 color 、 gradient 或 texture 。 - 若对象没有边框也没有文本， noFill 会让对象不可见，但对象仍可能可被选中。 纯色填充 字段 说明 --- --- scheme 可选。引用主题色槽位。 realColor 实际渲染颜色。 color 原始颜色或主题基础颜色。 alpha 可选。透明度，范围建议 0..100000 ，值越大越不透明。 lumMod 可选。亮度乘数。 lumOff 可选。亮度偏移。 shade 可选。变暗比例。 tint 可选。变亮比例。 设置效果： - 只设置 realColor / color ：使用纯色。 - 设置 scheme ：颜色可随主题变化。 - 设置 alpha ：颜色半透明，能看到底层内容。 - 设置 lumMod / lumOff ：在主题色基础上变亮或变暗。 realColor 和 color 都使用核心协议中的 32 位有符号 ARGB 十进制颜色。常用转换示例： - FFFFFF 写为 -1 。 - 000000 写为 -16777216 。 - 4874CB 写为 -12028725 。 - rgba 0,0,0,0.17 可写为 realColor: 721420288 ，并同时写入 alpha: 17000 保留透明度语义。 具体换算公式、十六进制和 rgba 的处理规则见 ../core.md ../core.md 的“颜色”章节。 渐变填充 字段 说明 --- --- angle 渐变角度。常用于线性渐变方向。 colors 渐变色标数组。 fractions 色标位置数组，长度应与 colors 一致。通常使用 0..1 。 gradientType 渐变类型，例如 linear 。 insets 渐变区域内缩。没有内缩时为 null 。 flip 翻转模式。没有翻转时为 null 。 tileRect 平铺区域。没有平铺时为 null 。 rotWithShape 是否随形状旋转。 限制： - colors.length 与 fractions.length 应一致。 - fractions 应按从小到大排列。 - 只有当目标渲染器支持渐变时才应使用复杂渐变；否则建议降级为首个色标或平均色。 纹理填充 字段 说明 --- --- imageData 图片资源。可以是 URL，也可以是 data:image/...;base64,... 。 contentType MIME 类型，例如 image/png 、 image/jpeg 。 alpha 图片透明度， 100000 表示完全不透明。 flipMode 翻转模式。常用 NONE 。 stretch 拉伸填充参数。通常 0,0,0,0 表示完整图片拉伸到对象区域。 insets 裁剪内缩参数。常用于图片裁剪。 offset 平铺或缩放时的偏移。 scale 平铺或缩放时的比例。 alignment 对齐方式，例如 CENTER 。 alphaModFix 透明度修正值。 rotWithShape 是否随对象旋转。 拉伸图片填充 效果：图片被拉伸填满对象区域。对象宽高比与图片宽高比不一致时，图片会被压缩或拉伸变形。 裁剪图片填充 效果：先按 insets 裁剪图片，再填充到对象区域。裁剪值通常使用 PPTX 百分比单位，正值表示从对应边向内裁剪。 平铺或缩放图片填充 效果：图片按 scale 缩放后填充对象，可结合 offset 和 alignment 控制位置。适用于纹理、图案或保持图片原始比例的场景。 限制： - stretch 和 scale / offset 不建议同时使用。若同时出现，应明确一个优先级。 - imageData 为远程 URL 时，渲染端需要具备下载和缓存能力。 - alpha 、 alphaModFix 都会影响透明度，合成时应避免重复应用。 strokeStyle 字段 说明 --- --- paint 线条填充。使用 { \"type\": \"noFill\" } 表示无边框。 lineWidth 线宽。值越大边框越粗。 lineCap 线端样式，例如 FLAT 。 lineJoin 转角连接样式，例如 ROUND 。 lineDash 虚线样式，例如 SOLID 。 lineCompound 复合线样式，例如 SINGLE 、 DOUBLE 。 示例： shadow shadow 表示对象阴影。文本框、图片、形状、表格单元格等可视对象都可以支持阴影。 字段 说明 --- --- algn 阴影相对对象的对齐位置。例如 t 表示顶部方向的对齐基准。 blur 模糊半径。值越大，阴影边缘越柔和。 angle 阴影方向角度。 distance 阴影相对对象的偏移距离。 rotWithShape 对象旋转时阴影是否一起旋转。 scaleX 阴影横向缩放比例。大于 1 时阴影比对象更宽。 scaleY 阴影纵向缩放比例。大于 1 时阴影比对象更高。 fillStyle 阴影颜色和透明度。通常使用半透明颜色填充。 示例： 设置效果： - 增大 blur ：阴影更柔和，扩散范围更大。 - 增大 distance ：阴影离对象更远，方向由 angle 决定。 - 设置较低 alpha ：阴影更淡。 - 设置 scaleX / scaleY 大于 1 ：阴影面积略大于对象，类似外阴影。 限制： - fillStyle 应使用颜色填充。渐变或图片阴影可能无法被所有渲染器支持。 - blur 和 distance 不建议使用负数。 - 如果对象本身透明或无填充，阴影仍应按对象几何轮廓计算。 effectLst effectLst 用于保留额外效果列表。当前可为空对象。第三方实现如果不能识别其中的效果，应保留原值并透传。 hyperlink 字段 说明 --- --- type 链接类型，例如 URL 。 label 链接显示名称。可以为空字符串。 address 链接地址或动作地址。 action 动作指令。媒体播放可使用 ppaction://media 。 示例： 媒体对象通常使用 ppaction://media 触发播放行为。普通网页跳转可把 address 设置为 URL。","headings":[{"id":"common-property-对象公共属性","text":"对象公共属性","level":1},{"id":"common-property-属性位置","text":"属性位置","level":2},{"id":"common-property-realtype","text":"`realType`","level":2},{"id":"common-property-anchor","text":"`anchor`","level":2},{"id":"common-property-设置位置和尺寸","text":"设置位置和尺寸","level":3},{"id":"common-property-rotation","text":"`rotation`","level":2},{"id":"common-property-shapetype","text":"`shapeType`","level":2},{"id":"common-property-geometry","text":"`geometry`","level":2},{"id":"common-property-placeholder","text":"`placeholder`","level":2},{"id":"common-property-fillstyle","text":"`fillStyle`","level":2},{"id":"common-property-无填充","text":"无填充","level":3},{"id":"common-property-纯色填充","text":"纯色填充","level":3},{"id":"common-property-渐变填充","text":"渐变填充","level":3},{"id":"common-property-纹理填充","text":"纹理填充","level":3},{"id":"common-property-拉伸图片填充","text":"拉伸图片填充","level":4},{"id":"common-property-裁剪图片填充","text":"裁剪图片填充","level":4},{"id":"common-property-平铺或缩放图片填充","text":"平铺或缩放图片填充","level":4},{"id":"common-property-strokestyle","text":"`strokeStyle`","level":2},{"id":"common-property-shadow","text":"`shadow`","level":2},{"id":"common-property-effectlst","text":"`effectLst`","level":2},{"id":"common-property-hyperlink","text":"`hyperlink`","level":2}]},{"title":"文本对象","slug":"text","source":"protocol/object/text.md","description":"文本框、段落、文本片段和富文本组合。","text":"文本对象 文本由三层节点组成： - text 表示文本框或文本形状，负责位置、形状、背景、边框、阴影和文本容器设置。 - p 表示段落，负责段落对齐、项目符号、缩进、行距和段间距。 - r 表示文本片段，负责实际字符串和字符级样式。 text 字段 设置方式 效果 --- --- --- realType 显式文本框使用 TextBox ；占位符或自动形状文本使用 Auto 。 控制 PPTX 语义类型。 anchor x, y, width, height 。 定义文本容器区域。 placeholder 文本表示版式占位符时设置。 用于版式匹配和默认样式继承。 shapeType 通常为 rect 。 决定外框形状类别。 fillStyle 使用 noFill 、 color 、 gradient 或 texture 。 设置文本框背景。 strokeStyle 设置线条填充、线宽和虚线样式。 设置文本框边框。 geometry 通常为 { \"name\": \"rect\" } 。 定义形状轮廓和文本边界。 shadow 设置公共阴影对象。 给文本框形状添加阴影。 rotation 角度数值。 旋转整个文本框。 textAutofit NONE 、 NORMAL 或 SHAPE 。 控制文本如何适应框大小。 textDirection HORIZONTAL 或 EA_VERTICAL 。 横排或东亚竖排文本。 textVerticalAlignment TOP 、 MIDDLE 、 BOTTOM 。 控制文本在框内的垂直位置。 textWordWrap true 或 false 。 启用或禁用自动换行。 textInsets top, right, bottom, left 。 设置边框和文本之间的内边距。 文本自适应 值 行为 --- --- NONE 文本保持原字号，可能溢出文本框。 NORMAL 文本可以缩小以适配可用区域。 SHAPE 形状或文本框可以调整，使内容更容易完整显示。 需要精确保留字号时使用 NONE 。导入 PPTX 内容且希望尽量保持文字可见时使用 SHAPE 。 自动换行和内边距 - textWordWrap: true 让长文本在 anchor.width 范围内自动换行。 - textWordWrap: false 允许长行横向溢出。 - 左右内边距越大，可用文本宽度越小。 - 上下内边距越大，可用文本高度越小。 p 字段 设置方式 效果 --- --- --- fontAlign AUTO 。 使用自动字体对齐。 textAlign LEFT 、 CENTER 、 RIGHT 。 控制段落水平对齐。 indent 数值，可为负数。 控制首行或项目符号缩进。 indentLevel 非负整数。 控制段落嵌套层级。 bulletStyle { \"buNone\": true } 或项目符号字符配置。 禁用或启用项目符号。 leftMargin 数值。 让段落内容离左边缘更远。 lineSpacing 数值。 控制行间距。值越大行距越松。 spaceBefore 数值。 增加段前间距。 spaceAfter 数值。 增加段后间距。可使用负数压缩段落间距。 项目符号样式 无项目符号： 项目符号列表： 设置项目符号时，通常同时设置： - leftMargin ：正文整体左移距离。 - indent ：项目符号和正文的相对位置。负数会让项目符号位于正文左侧。 - bulletCharacter ：项目符号字符。 - bulletFont ：项目符号字体。 r 字段 设置方式 效果 --- --- --- fontSize 数值。 设置文本字号。 bold true 或缺失。 让该文本片段加粗。 characterSpacing 数值。 增加字符间距。 fontFamily 字体名称。 设置文本片段字体。 fontColor 颜色填充对象。 设置文本颜色。 highlightColor 颜色数值。 在文字字形后添加高亮。 slideNum true 。 标记该文本片段为页码占位文本。 lang 类似 BCP-47 的语言标签，例如 zh-CN 或 en-US 。 帮助字体回退和文本排版。 富文本组合 一段富文本应该用一个 p 包住多个 r 。每个 r 只负责一段连续样式一致的文本。 渲染结果： - 你好， 加粗。 - 世界 使用主题色并带高亮。 - 两段文字在同一段落中连续排版。 多段文本 多段文本用多个 p 表示。每个段落可以有不同对齐、项目符号和行距。 空段落 空段落可以使用： 空段落用于保留换行、占位内容或编辑器光标位置。","headings":[{"id":"text-文本对象","text":"文本对象","level":1},{"id":"text-text","text":"`text`","level":2},{"id":"text-文本自适应","text":"文本自适应","level":3},{"id":"text-自动换行和内边距","text":"自动换行和内边距","level":3},{"id":"text-p","text":"`p`","level":2},{"id":"text-项目符号样式","text":"项目符号样式","level":3},{"id":"text-r","text":"`r`","level":2},{"id":"text-富文本组合","text":"富文本组合","level":2},{"id":"text-多段文本","text":"多段文本","level":2},{"id":"text-空段落","text":"空段落","level":2}]},{"title":"图片对象","slug":"image","source":"protocol/object/image.md","description":"图片资源、不透明度、裁剪和媒体封面。","text":"图片对象 image 表示图片对象。它也可以作为音频或视频媒体的封面对象，媒体资源通过额外字段挂在 extInfo.property 上。 结构 字段 设置方式 效果 --- --- --- realType Picture 。 标记该对象为图片形状。 shapeType 通常为 rect 。 定义外部裁剪形状。 anchor x, y, width, height 。 设置图片位置和尺寸。 rotation 角度数值。 旋转图片对象。 fillStyle 纹理填充。 提供实际显示的图片像素。 geometry 通常为 rect 。 定义图片轮廓。 shadow 公共阴影对象。 添加图片阴影。 hyperlink 超链接对象。 添加点击动作；媒体对象使用 ppaction://media 。 fileName 文件名。 保留源文件身份。 image URL 或 data:image/... 。 主图片资源。 clipping 四数值裁剪数组。 显示前裁剪图片。 extension 文件扩展名。 辅助导出和 MIME 推断。 contentType MIME 类型。 描述图片类型。 imageAlpha 0..100000 。 控制图片不透明度。 fillAlpha 0..100000 。 控制纹理填充不透明度。 audio data:audio/... 或 URL。 让该图片表示音频对象。 video data:video/... 或 URL。 让该图片表示视频对象。 extContentType MIME 类型。 描述外部媒体类型，例如 audio/mp3 。 基础图片 图片资源字段 除非有意区分缩略图和原图，否则 image 与 fillStyle.texture.imageData 应指向同一份视觉资源。 字段 推荐用途 --- --- image 需要读取图片内容的消费端使用的主资源。 fillStyle.texture.imageData 形状填充或渲染逻辑使用的资源。 fileName 可获得时保留原始文件名。 extension 文件后缀，例如 .png 、 .jpg 。 contentType MIME 类型，例如 image/png 、 image/jpeg 。 使用 Base64 时，应包含完整的数据 URI 前缀： 不透明度 不透明度字段使用 0..100000 ： 值 效果 --- --- 100000 完全不透明。 50000 约 50% 不透明。 0 完全透明。 除非渲染器明确需要分开处理，否则建议 imageAlpha 、 fillAlpha 和 texture.alpha 使用相同值。 裁剪 图片裁剪可以通过两个字段表达： 字段 位置 说明 --- --- --- clipping ImageProperty 对图片资源的裁剪参数。 fillStyle.texture.insets TextureFill 纹理填充裁剪参数。 推荐同时设置两者，并保持值一致： 裁剪效果： - left 增大：从图片左侧向内裁剪。 - top 增大：从图片顶部向内裁剪。 - right 增大：从图片右侧向内裁剪。 - bottom 增大：从图片底部向内裁剪。 限制： - 裁剪值不应让可见区域宽度或高度变为 0 或负数。 - 裁剪后图片仍会被映射到 anchor 区域。 - 如果只设置 clipping 而不设置 texture.insets ，部分渲染器可能只在导出阶段裁剪，预览不裁剪。 拉伸、裁剪和平铺 模式 字段 效果 --- --- --- 拉伸 texture.stretch 图片拉伸填满对象，可能改变比例。 裁剪 clipping + texture.insets 裁剪图片后填充对象。 平铺/缩放 texture.scale , texture.offset , texture.alignment 缩放或平铺图片，适合纹理图案。 详见 common-property.md common-property.md 的 TextureFill 。 图片作为媒体封面 音频或视频对象可以使用 image 作为封面/播放按钮。媒体资源放在 audio 或 video 字段中。 媒体播放相关信息还需要在页面 extInfo.animationExt 或 extInfo.animation 中描述。详见 other-objects.md other-objects.md 。","headings":[{"id":"image-图片对象","text":"图片对象","level":1},{"id":"image-结构","text":"结构","level":2},{"id":"image-基础图片","text":"基础图片","level":2},{"id":"image-图片资源字段","text":"图片资源字段","level":2},{"id":"image-不透明度","text":"不透明度","level":2},{"id":"image-裁剪","text":"裁剪","level":2},{"id":"image-拉伸-裁剪和平铺","text":"拉伸、裁剪和平铺","level":2},{"id":"image-图片作为媒体封面","text":"图片作为媒体封面","level":2}]},{"title":"表格对象","slug":"table","source":"protocol/object/table.md","description":"表格、行、单元格、合并单元格和单元格文本。","text":"表格对象 表格由三层节点组成： tableColumn 表示单元格，而不是物理列。单元格文本使用与普通文本相同的 p -\u003e r 结构。 table 字段 设置方式 效果 --- --- --- anchor x, y, width, height 。 定义完整表格区域。 realType table 。 标记该节点为表格。 numberOfColumns 正整数。 定义逻辑列数。 numberOfRows 正整数。 定义逻辑行数。 numberOfColumns 和 numberOfRows 描述逻辑网格大小。由于存在合并单元格，实际 tableRow.children.length 可以小于 numberOfColumns 。 tableRow 字段 设置方式 效果 --- --- --- rowHeight 大于 0 的数值。 设置行高。除垂直合并单元格外，同一行内所有单元格都应对齐到该高度。 tableColumn 字段 设置方式 效果 --- --- --- rowSpan extInfo 中的整数。 将该单元格向下合并多行。 gridSpan extInfo 中的整数。 将该单元格向右合并多列。 realType TableCell 。 标记该节点为表格单元格。 anchor x, y, width, height 。 定义实际单元格区域。合并单元格应有更大的宽度或高度。 fillStyle 填充样式。 设置单元格背景。 strokeStyle 边框样式。 设置默认单元格边框样式。 geometry 通常为 tableColumn 。 定义单元格几何。 textDirection HORIZONTAL 或 EA_VERTICAL 。 设置单元格文本方向。 textVerticalAlignment TOP 、 MIDDLE 、 BOTTOM 。 设置文本在单元格内的垂直对齐。 textInsets top, right, bottom, left 。 设置单元格文本内边距。 columnWidth 数值。 一个逻辑列的基础宽度。 borders BorderStyle 。 设置每条边的边框。 边框 borders 是四边边框数组。实现方应保持数组顺序稳定，并在自身系统中明确边顺序映射。若边框项字段为 null ，表示该边使用默认样式或无显式设置。 示例： 合并单元格 水平合并 水平合并使用 gridSpan 。被合并的单元格只保留左上角主单元格，后续被覆盖的逻辑单元格不再单独出现。 设置效果： - gridSpan: 2 表示该单元格占用两个逻辑列。 - anchor.width 应等于被合并列宽之和。 - columnWidth 可保留单个基础列宽，便于还原网格。 垂直合并 垂直合并使用 rowSpan 。 设置效果： - rowSpan: 2 表示该单元格占用两行。 - anchor.height 应等于被合并行高之和。 - 被覆盖行中不应再创建对应的独立单元格。 单元格文本 单元格内容使用段落和文本片段： 校验规则 - table.children.length 应等于 numberOfRows 。 - 每一行可见单元格跨度之和应等于 numberOfColumns 。 - rowSpan 和 gridSpan 应为正整数。 - 被合并覆盖的网格位置不应重复创建单元格。 - 单元格 anchor 应与表格网格对齐。 - 单元格文本应使用 p -\u003e r ，避免直接把原始文本放在 tableColumn 上。","headings":[{"id":"table-表格对象","text":"表格对象","level":1},{"id":"table-table","text":"`table`","level":2},{"id":"table-tablerow","text":"`tableRow`","level":2},{"id":"table-tablecolumn","text":"`tableColumn`","level":2},{"id":"table-边框","text":"边框","level":2},{"id":"table-合并单元格","text":"合并单元格","level":2},{"id":"table-水平合并","text":"水平合并","level":3},{"id":"table-垂直合并","text":"垂直合并","level":3},{"id":"table-单元格文本","text":"单元格文本","level":2},{"id":"table-校验规则","text":"校验规则","level":2}]},{"title":"分组对象","slug":"container","source":"protocol/object/container.md","description":"分组坐标系、嵌套、移动和缩放。","text":"分组对象 container 表示分组对象。分组用于把多个对象作为一个整体移动、缩放或嵌套。 结构 字段 设置方式 效果 --- --- --- realType Group 。 标记该对象为分组。 anchor x, y, width, height 。 定义分组在父坐标系中的外框。 interiorAnchor x, y, width, height 。 定义子对象使用的内层坐标系。 rotation 角度数值。 同时旋转分组及其所有子对象。 shadow 公共阴影对象。 渲染器支持分组效果时，为分组边界添加阴影。 坐标模型 分组有两个区域： 字段 坐标系 说明 --- --- --- point 父坐标系 分组可见外框。 anchor 父坐标系或父级归一化空间 分组放置区域。 interiorAnchor 分组内部坐标系 映射子对象坐标时使用的基准区域。 顶层分组通常使用页面坐标： 嵌套分组或导入数据中可能使用归一化坐标。归一化坐标需要结合父分组尺寸换算。 位置 移动分组时，应同步更新： - point 0 / point 1 - property.anchor 0 / property.anchor 1 如果分组使用绝对坐标，子对象 point 可以保持不变或按同样偏移更新，取决于实现方是否把子对象存储为绝对坐标。推荐策略： 存储策略 移动分组 移动子对象 --- --- --- 子对象使用绝对坐标 同时更新分组和子对象坐标。 是 子对象使用相对坐标 只更新分组坐标。 否 实现方应在写入时保持同一种策略，避免同一分组内混合绝对和相对坐标。 缩放 缩放分组时，应调整 anchor / point 的宽高，并按比例映射子对象。 如果子对象使用归一化坐标，缩放只需要更新父分组 anchor / point ，子对象归一化坐标保持不变。 嵌套分组 分组可以嵌套： 嵌套分组解析时，应从外到内逐层建立坐标系。 包含文本子对象的分组 限制 - 除非分组是临时编辑产物，否则 container.children 不应为空。 - anchor.width 和 anchor.height 应大于 0 。 - 子对象 pid 应指向分组 id。 - 移动和缩放分组时，应保持子对象顺序不变。 - 如果分组有旋转，子对象命中测试和渲染应先应用分组变换，再应用子对象自身变换。","headings":[{"id":"container-分组对象","text":"分组对象","level":1},{"id":"container-结构","text":"结构","level":2},{"id":"container-坐标模型","text":"坐标模型","level":2},{"id":"container-位置","text":"位置","level":2},{"id":"container-缩放","text":"缩放","level":2},{"id":"container-嵌套分组","text":"嵌套分组","level":2},{"id":"container-包含文本子对象的分组","text":"包含文本子对象的分组","level":2},{"id":"container-限制","text":"限制","level":2}]},{"title":"其他对象","slug":"other-objects","source":"protocol/object/other-objects.md","description":"音频、视频和页面媒体动画扩展。","text":"其他对象 本文档描述当前协议中不需要单独完整章节的对象和扩展形态，包括音频、视频和媒体播放信息。 媒体对象模型 音频和视频通常不是独立的顶层 type ，而是挂载在 image 对象上： - image 对象提供页面上的可见封面、播放按钮或视频首帧。 - audio 或 video 字段保存媒体资源。 - extContentType 保存媒体 MIME 类型。 - hyperlink 使用 ppaction://media 表示点击触发媒体行为。 - 页面 extInfo.animationExt 或 extInfo.animation 描述播放动画、音量、循环和播放时长。 音频 字段 设置方式 效果 --- --- --- audio data:audio/...;base64,... 或 URL。 提供音频二进制内容或资源地址。 extContentType MIME 类型，例如 audio/mp3 。 告诉消费端如何解码媒体。 hyperlink.address ppaction://media 。 标记点击动作为媒体播放。 hyperlink.action ppaction://media 。 保留 PPTX 动作行为。 示例： 视频 视频使用与音频相同的挂载方式，只是资源字段改为 video 。 字段 设置方式 效果 --- --- --- video data:video/...;base64,... 或 URL。 提供视频二进制内容或资源地址。 extContentType MIME 类型，例如 video/mp4 。 告诉消费端如何解码媒体。 image 缩略图、封面图或首帧。 在幻灯片上显示媒体对象。 hyperlink 通常为 ppaction://media 。 点击播放行为。 示例： 页面媒体动画 页面级 extInfo.animationExt 可描述媒体播放行为。 字段 说明 --- --- elementId 目标媒体对象 id。 presetClass 媒体播放通常使用 mediacall 。 presetId 动画预设 id。 presetSubtype 动画预设子类型。 animation 便于阅读的动画名称。 text 可选文本说明。 startType 播放触发类型。实现方应保留该值。 attr.media_vol 音量，通常为 50% 这样的百分比字符串。 attr.media_repeatCount 重复次数。 attr.cmd 播放命令，例如 playFrom 0.0 。 attr.audio 目标为音频时为 true 。 attr.video 目标为视频时为 true 。 duration 媒体播放时长。 示例： 切换和原始动画 页面也可以包含 transition 和 animation ： 这些字段结构可能较深，第三方实现如果不需要编辑动画，建议完整保留并透传。 兼容性说明 - 媒体对象仍然按 image 对象渲染其封面。 - 播放能力取决于运行环境是否支持对应 MIME 类型。 - 媒体数据 URI 可能非常大，处理时应避免无意义复制。 - 如果无法播放媒体，也应保留 audio 、 video 、 extContentType 、 hyperlink 和页面动画字段，以便回写时不丢失信息。","headings":[{"id":"other-objects-其他对象","text":"其他对象","level":1},{"id":"other-objects-媒体对象模型","text":"媒体对象模型","level":2},{"id":"other-objects-音频","text":"音频","level":2},{"id":"other-objects-视频","text":"视频","level":2},{"id":"other-objects-页面媒体动画","text":"页面媒体动画","level":2},{"id":"other-objects-切换和原始动画","text":"切换和原始动画","level":2},{"id":"other-objects-兼容性说明","text":"兼容性说明","level":2}]}]</script>
+    <script src="assets/app.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "docmee-pptxproperty-structural-protocol",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:site": "node scripts/build-docs.mjs",
+    "serve:site": "cd site && npx serve"
+  }
+}
